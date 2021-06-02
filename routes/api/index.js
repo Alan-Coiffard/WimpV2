@@ -2,8 +2,13 @@ var express = require("express");
 
 var router = express.Router();
 
-router.get("/users", function(req, res) {
-  res.json("This is a json status code for the users api");
+router.use(function(req, res, next){
+  //console.log('Dans index : ', req.session.colliers);
+  //console.log('Dans index -> res.locals.user : ', req.session);
+  res.locals.user = req.session;
+  next();
 });
+
+router.use("/animal", require("./api"));
 
 module.exports = router;

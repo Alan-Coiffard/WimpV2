@@ -704,16 +704,6 @@ const entreModif = (request, response) => {
 }
 
 
-const afficherAnimal = (request, response) => {
-  console.log("Entre dans afficher animal");
-  const idSelect = request.body.listeAnimaux
-  console.log(idSelect);
-  request.session.idAnimalSelect = idSelect;
-  response.redirect("/home")
-}
-
-
-
 // don't forget to export!
 module.exports = {
   signup,
@@ -727,6 +717,5 @@ module.exports = {
   supprimerCollier,
   supprimerAnimal,
   modifierAnimal,
-  entreModif,
-  afficherAnimal
+  entreModif
 }

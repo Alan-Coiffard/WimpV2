@@ -20,10 +20,13 @@ app.set("port", process.env.PORT || 3000);
 
 //Définie la route pour les views (toutes les page EJS)
 app.set("views", path.join(__dirname, "views"));
+app.set("node_modules", path.join(__dirname, 'node_modules'));
+
 //Donne les infos pour faire fonctionner EJS
 app.set("view engine", "ejs");
 
 app.use(express.static('public'));
+app.use(express.static('node_modules'));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
