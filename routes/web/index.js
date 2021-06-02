@@ -36,8 +36,6 @@ router.use("/ajoutAnimal", require("./home"));
 router.use("/modifierAnimal", require("./home"));
 router.use("/entreModif", require("./home"));
 
-router.use("/animal", require("./home"));
-
 router.use("/supprimerAnimal", require("./home"));
 
 router.use("/ajoutCollier", require("./home"));
