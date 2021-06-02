@@ -75,7 +75,6 @@ router.get('/supprimerAnimal', User.supprimerAnimal);
 router.get('/entreModif', User.entreModif);
 router.post('/modifierAnimal', User.modifierAnimal);
 
-router.post('/animal', User.afficherAnimal);
 
 // router.post('/supprimerAnimal', function(req, res){
 //   //res.render('_partial/profil/supprimer/_supprimer_Animal');
