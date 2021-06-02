@@ -1,0 +1,130 @@
+<h2><u>Ajouter un animal</u></h2>
+<form action="/ajoutAnimal" method="post" class="form-ajout">
+  <label><b>Nom de l'animal :</b> <input id="nomAnimal" onkeypress="verifInputAnimal();" type="text" name="nom_animal" value="">
+    <p id="warningNomAnimal" style="color: var(--rougeleg); text-decoration: underline;"></p></label>
+  <label><b>Type :</b>
+    <select id="type" name="type" onChange="verifInputAnimal();">
+      <option value="">--Choisir un type d'animal--</option>
+      <% for (const type of locals.user.types) { %>
+          <option name="type" value="<%= type.type %>"><%= type.type %></option>
+      <%}%>
+    </select>
+    <p id="warningType" style="color: var(--rougeleg); text-decoration: underline;"></p>
+  </label>
+
+  <label><b>Date de naissance :</b><input type="date" id="datefield" class="date" onChange="verifInputAnimal();" min='1899-01-01' max='2000-13-13' name="naissance_animal" value=""></label>
+  <p id="warningDate" style="color: var(--rougeleg); text-decoration: underline;"></p>
+  <label><input id="check" type="checkbox" checked onChange="verif();" />Distance maximal</label>
+  <div id="range" class="">
+    <input type="range" name="distance" class="notinput" min="0" max="100" value="0" oninput="document.getElementById('AfficheRange').textContent=value" />
+    <span id="AfficheRange">0</span>m
+  </div>
+  <label><b>Collier à utiliser :</b>
+    <select name="id_collier" id="collier-select">
+      <option value="">--Choisir un collier--</option>
+      <% for (const collier of locals.user.colliers) { %>
+        <% if(collier.id_animal_collier == null){ %>
+          <option name="type" value="<%= collier.id_collier %>"><%= collier.numero_collier %></option>
+        <%}%>
+      <%}%>
+    </select>
+  </label>
+  <input type="submit" id="submitAj" disabled class="btn btn-envoyer submit" value="Ajouter" />
+</form>
+<button onclick="annuler_modal_1();" type="button" class="btn btn-annuler" name="button">Annuler</button>
+
+<script type="text/javascript">
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  var year = yyyy - 100;
+   if(dd<10){
+          dd='0'+dd
+      }
+      if(mm<10){
+          mm='0'+mm
+      }
+
+  today = yyyy+'-'+mm+'-'+dd;
+  last = year+'-'+mm+'-'+dd;
+  document.getElementById("datefield").setAttribute("max", today);
+  document.getElementById("datefield").setAttribute("min", last);
+
+  function verifInputAnimal() {
+    //nom animal
+    var nomAnimal = document.getElementById('nomAnimal');
+    var warningNomAnimal = document.getElementById('warningNomAnimal');
+    var verifnomAnimal = false;
+    //type animal
+    var type = document.getElementById('type');
+    var warningType = document.getElementById('warningType');
+    var veriftype = false;
+    //date naissancce
+    var date = document.getElementsByClassName('date');
+    var warningDate = document.getElementById('warningDate');
+    var verifDate = false;
+
+    var annee = date[0].value.split("-");
+    var anneeRef = last.split("-");
+
+    if (date[0].value == "" || annee[0] < anneeRef[0]) {
+      date[0].style.backgroundColor = "var(--rougeleg)";
+      warningDate.innerHTML = "Veuillez entrer une date valide (jj/mm/aaaa)";
+      verifDate = false;
+    }else {
+      date[0].style.backgroundColor = "var(--vertleg)";
+      warningDate.innerHTML = "";
+      verifDate = true;
+    }
+
+    if (type.value == "") {
+      type.style.backgroundColor = "var(--rougeleg)";
+      warningType.innerHTML = "Veuillez selectionner un type d'animal";
+      veriftype = false;
+    }else {
+      type.style.backgroundColor = "var(--vertleg)";
+      warningType.innerHTML = "";
+      veriftype = true;
+    }
+
+    if (nomAnimal.value == "") {
+      nomAnimal.style.backgroundColor = "var(--rougeleg)";
+      warningNomAnimal.innerHTML = "Veuillez entrer un nom";
+      verifnomAnimal = false;
+    }else {
+      nomAnimal.style.backgroundColor = "var(--vertleg)";
+      warningNomAnimal.innerHTML = "";
+      verifnomAnimal = true;
+    }
+
+    //Il faut modifier cette partie car sinon l'ajout le bouton reste grisé
+    if( verifnomAnimal == true && veriftype == true && verifDate == true){
+      document.getElementById("submitAj").disabled = false;
+      document.getElementById("submitAj").style.backgroundColor = "var(--marronleg)";
+    }else {
+      document.getElementById("submitAj").disabled = true;
+      document.getElementById("submitAj").style.backgroundColor = "var(--grisleg)";
+    }
+  }
+
+function verif()
+{
+    var etat = document.getElementById('check').checked;
+    if(etat)
+    {
+        document.getElementById('range').className = 'on';
+    }
+    else
+    {
+        document.getElementById('range').className = 'off';
+    }
+}
+function annuler_modal_1(){
+  var addAnimal = document.getElementById('addAnimal');
+  console.log(addAnimal);
+  addAnimal.style.display = "none";
+}
+
+</script>

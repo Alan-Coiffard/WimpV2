@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <title>Toggle Popover Tutorial</title>
+  </head>
+  <style media="screen">
+    * {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 95vh 0;
+  font-family: "lato";
+}
+section {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.title-section {
+  display:block;
+  max-width: 500px;
+  padding: 3%;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index:-1;
+}
+button {
+  font: 500 20px lato !important;
+  color: #ffffff;
+  border: none;
+  background: purple;
+  padding: 1em 2em;
+}
+button:hover {
+  cursor:pointer;
+}
+
+#popper-popup {
+  display: none;
+
+  background: #333;
+  color: white;
+  font-weight: bold;
+  padding: 20px;
+  font-size: 13px;
+  border-radius: 4px;
+  display: none;
+  width: 100%;
+  max-width: 400px;
+}
+#popper-popup a {
+  font-size: 16px;
+  font-weight: 300;
+  display: block;
+  padding: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#popper-popup a:hover {
+  background: #444444;
+}
+#popper-popup[data-popper-reference-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+#popper-popup[show-popper] {
+  display: block;
+  z-index: 9999;
+}
+
+/*keep popper visible in the Divi Builder for editing*/
+#et-fb-app #popper-popup {
+  display: block;
+}
+
+/*build the arrow targeting the divider with class 'popper-arrow'*/
+#popper-arrow,
+#popper-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #333333;
+}
+#popper-arrow {
+  visibility: hidden;
+}
+#popper-arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
+
+/*position arrow using popper.js data-popper-placement attribute*/
+#popper-popup[data-popper-placement^="top"] #popper-arrow {
+  bottom: -4px;
+}
+
+#popper-popup[data-popper-placement^="bottom"] #popper-arrow {
+  top: -4px;
+}
+
+#popper-popup[data-popper-placement^="left"] #popper-arrow {
+  right: -4px;
+}
+
+#popper-popup[data-popper-placement^="right"] #popper-arrow {
+  left: -4px;
+}
+
+/*hide arrow when reference outside of viewport*/
+#popper-popup[data-popper-reference-hidden] #popper-arrow::before {
+  visibility: hidden;
+}
+
+  </style>
+  <body>
+    <section class="title-section"><h1>Click Button to Open Popover. Then scroll and adjust browser width to see the positioning magic!</h1></section>
+    <section id="popper-section">
+    <input type="text" id="popper-button" name="" value="">
+    <div id="popper-popup">
+      <a href="#">menu item</a>
+      <a href="#">menu item</a>
+      <a href="#">menu item</a>
+      <a href="#">menu item</a>
+      <div id="popper-arrow"></div>
+    </div>
+
+    </section>
+    <script type="text/javascript">
+      const popperButton = document.querySelector("#popper-button");
+const popperPopup = document.querySelector("#popper-popup");
+const popperSection = document.querySelector("#popper-section");
+const popperArrow = document.querySelector("#popper-arrow");
+
+let popperInstance = null;
+
+//create popper instance
+function createInstance() {
+  popperInstance = Popper.createPopper(popperButton, popperPopup, {
+    placement: "auto", //preferred placement of popper
+    modifiers: [
+      {
+        name: "offset", //offsets popper from the reference/button
+        options: {
+          offset: [0, 8]
+        }
+      },
+      {
+        name: "flip", //flips popper with allowed placements
+        options: {
+          allowedAutoPlacements: ["right", "left", "top", "bottom"],
+          rootBoundary: "viewport"
+        }
+      }
+    ]
+  });
+}
+
+//destroy popper instance
+function destroyInstance() {
+  if (popperInstance) {
+    popperInstance.destroy();
+    popperInstance = null;
+  }
+}
+
+//show and create popper
+function showPopper() {
+  popperPopup.setAttribute("show-popper", "");
+  popperArrow.setAttribute("data-popper-arrow", "");
+  createInstance();
+}
+
+//hide and destroy popper instance
+function hidePopper() {
+  popperPopup.removeAttribute("show-popper");
+  popperArrow.removeAttribute("data-popper-arrow");
+  destroyInstance();
+}
+
+//toggle show-popper attribute on popper to hide or show it with CSS
+function togglePopper() {
+  if (popperPopup.hasAttribute("show-popper")) {
+    hidePopper();
+  } else {
+    showPopper();
+  }
+}
+//execute togglePopper function when clicking the popper reference/button
+popperButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  togglePopper();
+});
+
+    </script>
+  </body>

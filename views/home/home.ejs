@@ -1,0 +1,147 @@
+<%- include ("../_partial/_header.ejs"); %>
+<div class="flex">
+  <div class="flex-items flex-item-70">
+    <div class="map">
+      <div class="map-date">
+        <%- include ("../_partial/_calendrier.ejs"); %>
+      </div>
+      <div class="map-api">
+        <link rel="stylesheet" type="text/css" href="./api/tutofr-main/tutofr.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+        <link rel="stylesheet" type="text/css" href="./api/tutofr-main/node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+        <style type="text/css">
+            #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+                width: 100%;
+            }
+        </style>
+        <div id="map">
+        <!-- Ici s'affichera la carte -->
+        </div>
+
+        <!-- Fichiers Javascript -->
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+        <script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
+        <script src="./api/tutofr-main/node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+        <script src="./api/tutofr-main/tutofr(safe).js"></script>
+      </div>
+    </div>
+  </div>
+  <div class="flex-items flex-item-30">
+    <div class="options">
+      <div class="options-profil">
+        <a href="/find">
+          <img src="images/profil.png" class="img-profil" alt="">
+        </a>
+        <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
+      </div>
+      <div class="options-api">
+        <% if(locals.user.animaux){ %>
+          <form class="selectAnimal" action="animal" method="post">
+            <select name="listeAnimaux" id="selectAnimaux">
+              <option value="">--Choisir l'animal--</option>
+              <% for (const animal of locals.user.animaux) { %>
+                  <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+              <%}%>
+            </select>
+            <input type="submit" id="submit1" class="" value="Selectionner" style="
+                      background-color: var(--marron);
+                      color: white;
+                      margin-top: 10px;
+                  ">
+          </form>
+        <%}else{%>
+          Vous n'avez pas encore d'animal
+        <%}%>
+        <% if (locals.user.idAnimalSelect) { console.log("Reussie : ", locals.user.idAnimalSelect); %>
+          <% if (locals.user.animaux) { %>
+            <% for (const animal of locals.user.animaux) { %>
+              <% if (animal.id_animal == locals.user.idAnimalSelect) {  console.log(animal.age_animal);%>
+
+                <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
+                <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
+                <p>Collier de l'animal</p><p class="pInput"><% if (animal.numero_collier) {%><%= animal.numero_collier %><% } else{%>Pas de collier<%}%></p>
+              <%}%>
+            <%}%>
+          <% } %>
+        <% } %>
+        <!-- <input type="text" name="" value="Types">
+        <input type="text" name="" value="Age"> -->
+      </div>
+    </div>
+  </div>
+  <div class="menuTelephone">
+    <div id="volet_clos">
+  		<div id="volet">
+        <div class="flex-items flex-item-90">
+          <div class="options2">
+            <div class="options-profil">
+              <a href="/find">
+                <img src="images/profil.png" class="img-profil" alt="">
+              </a>
+              <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
+            </div>
+            <div class="options-api">
+              <% if(locals.user.animaux){ %>
+                <form class="selectAnimal" action="/animal" method="post">
+                  <select name="listeAnimaux" id="selectAnimaux2">
+                    <option value="">--Choisir l'animal--</option>
+                    <% for (const animal of locals.user.animaux) { %>
+                        <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                    <%}%>
+                  </select>
+                  <input type="submit" id="submit2" class="" value="Selectionner" style="
+                      background-color: var(--marron);
+                      color: white;
+                      margin-top: 10px;
+                  ">
+                </form>
+                <% console.log(locals.user); %>
+
+              <%}else{%>
+                Vous n'avez pas encore d'animal
+              <%}%>
+              <!-- <input type="text" name="" value="Types">
+              <input type="text" name="" value="Age"> -->
+              <% if (locals.user.idSelect) { console.log("Reussie : ", locals.user.idSelect); %>
+                <% if (locals.user.animaux) { %>
+                  <% for (const animal of locals.user.animaux) { %>
+                    <% if (animal.id_animal == locals.user.idSelect) {  console.log(animal.age_animal);%>
+
+                      <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
+                      <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
+                      <p>Collier de l'animal</p><p class="pInput"><% if (animal.numero_collier) {%><%= animal.numero_collier %><% } else{%>Pas de collier<%}%></p>
+                    <%}%>
+                  <%}%>
+                <% } %>
+              <% } %>
+
+
+            </div>
+          </div>
+        </div>
+
+  			<a href="#volet" class="ouvrir" aria-hidden="true">Menu </a>
+  			<a href="#volet_clos" class="fermer" aria-hidden="true">fermer !</a>
+  		</div>
+  	</div>
+  </div>
+</div>
+<script type="text/javascript">
+  <% if (locals.user.animaux) { %>
+    let animaux = [];
+    animaux = <%- JSON.stringify(locals.user.animaux) %>;
+  <% } %>
+  console.log(animaux);
+  const selectElement = document.getElementById('selectAnimaux');
+  selectElement.addEventListener('change', (event) => {
+    //alert(event.target.value);
+    console.log("Id : ", event.target.value);
+    <% var idSelected %>
+    var idSelected = event.target.value;
+  });
+</script>
+
+<%- include ("../_partial/_footer.ejs"); %>

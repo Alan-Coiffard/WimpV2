@@ -1,0 +1,144 @@
+<h2><u>Modifier l'animal</u></h2>
+<% if (typeof values != 'undefined') { %>
+<form action="/modifierAnimal" method="post" class="form-ajout">
+  <input type="hidden" name="id_animal" value="<%= values[0].id_animal %>">
+  <label><b>Nom de l'animal :</b>
+    <input id="nomAnimalMod" onkeypress="verifInputAnimalMod();" type="text" name="nom_animal" value="<%= values[4].nom_animal %>">
+    <p id="warningNomAnimalMod" style="color: var(--rougeleg); text-decoration: underline;"></p>
+  </label>
+  <label><b>Type :</b>
+    <select id="typeMod" name="type" onChange="verifInputAnimalMod();" name="type">
+      <option value="<%= values[6].type_animal %>"><%= values[6].type_animal %></option>
+      <% for (const type of locals.user.types) { %>
+        <% if(type.type != values[6].type_animal ){ %>
+          <option name="type" value="<%= type.type %>"><%= type.type %></option>
+        <%}%>
+      <%}%>
+    </select>
+    <p id="warningTypeMod" style="color: var(--rougeleg); text-decoration: underline;"></p>
+  </label>
+
+  <label><b>Date de naissance : </b><input type="date" id="datefieldMod" class="dateMod" onChange="verifInputAnimalMod();" min='1899-01-01' max='2000-13-13' name="naissance_animal"  value="<%= values[9].annee %>-<%= values[10].mois %>-<%= values[11].jour %>"></label>
+  <p id="warningDateMod" style="color: var(--rougeleg); text-decoration: underline;"></p>
+
+  <div id="rangeM" class="">
+    <input type="range" name="distance" class="notinput" min="0" max="100" value="0" oninput="document.getElementById('AfficheRangeM').textContent=value" />
+    <span id="AfficheRangeM">0</span>m
+  </div>
+
+  <label><b>Collier à utiliser :</b>
+    <select name="id_collier" id="pet-select">
+      <option value="<%= values[1].id_collier %>"><% if(values[1].id_collier == null) { %> Choisir un collier <%}else{%> <%= values[2].numero_collier %> <%}%></option>
+      <% if (values[1].id_collier != null) { %>
+        <option value="">Enlever le collier</option>
+      <% } %>
+      <% for (const collier of locals.user.colliers) { %>
+        <% if(collier.id_animal_collier == null){ %>
+          <% if(collier.id_collier != values[1].id_collier ){ %>
+          <option name="type" value="<%= collier.id_collier %>"><%= collier.numero_collier %></option>
+          <%}%>
+        <%}%>
+      <%}%>
+    </select>
+  </label>
+
+  <input type="submit" id="submitMod" class="btn btn-envoyer" value="Modifier" />
+</form>
+
+<button onclick="close_modifier();" type="button" class="btn btn-annuler" name="button">Annuler</button>
+
+<script type="text/javascript">
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  var year = yyyy - 100;
+   if(dd<10){
+          dd='0'+dd
+      }
+      if(mm<10){
+          mm='0'+mm
+      }
+
+  today = yyyy+'-'+mm+'-'+dd;
+  last = year+'-'+mm+'-'+dd;
+  document.getElementById("datefield").setAttribute("max", today);
+  document.getElementById("datefield").setAttribute("min", last);
+
+  function verifInputAnimalMod() {
+    //nom animal
+    var nomAnimalMod = document.getElementById('nomAnimalMod');
+    var warningNomAnimalMod = document.getElementById('warningNomAnimalMod');
+    var verifnomAnimalMod = false;
+    //type animal
+    var typeMod = document.getElementById('typeMod');
+    var warningTypeMod = document.getElementById('warningTypeMod');
+    var veriftypeMod = false;
+    //date naissancce
+    var dateMod = document.getElementsByClassName('dateMod');
+    var warningDateMod = document.getElementById('warningDateMod');
+    var verifDateMod = false;
+
+    var annee = dateMod[0].value.split("-");
+    var anneeRef = last.split("-");
+
+    if (dateMod[0].value == "" || annee[0] < anneeRef[0]) {
+      dateMod[0].style.backgroundColor = "var(--rougeleg)";
+      warningDateMod.innerHTML = "Veuillez entrer une date valide (jj/mm/aaaa)";
+      verifDateMod = false;
+    }else {
+      dateMod[0].style.backgroundColor = "var(--vertleg)";
+      warningDateMod.innerHTML = "";
+      verifDateMod = true;
+    }
+
+    if (typeMod.value == "") {
+      typeMod.style.backgroundColor = "var(--rougeleg)";
+      warningTypeMod.innerHTML = "Veuillez selectionner un type d'animal";
+      veriftypeMod = false;
+    }else {
+      typeMod.style.backgroundColor = "var(--vertleg)";
+      warningTypeMod.innerHTML = "";
+      veriftypeMod = true;
+    }
+
+    if (nomAnimalMod.value == "") {
+      nomAnimalMod.style.backgroundColor = "var(--rougeleg)";
+      warningNomAnimalMod.innerHTML = "Veuillez entrer un nom";
+      verifnomAnimalMod = false;
+    }else {
+      nomAnimalMod.style.backgroundColor = "var(--vertleg)";
+      warningNomAnimalMod.innerHTML = "";
+      verifnomAnimalMod = true;
+    }
+
+    //Il faut modifier cette partie car sinon l'ajout le bouton reste grisé
+    if( verifnomAnimalMod == true && veriftypeMod == true && verifDateMod == true){
+      document.getElementById("submitMod").disabled = false;
+      document.getElementById("submitMod").style.backgroundColor = "var(--marronleg)";
+    }else {
+      document.getElementById("submitMod").disabled = true;
+      document.getElementById("submitMod").style.backgroundColor = "var(--grisleg)";
+    }
+  }
+
+function verif()
+{
+    var etat = document.getElementById('check').checked;
+    if(etat)
+    {
+        document.getElementById('range').className = 'on';
+    }
+    else
+    {
+        document.getElementById('range').className = 'off';
+    }
+}
+function close_modifier(){
+
+  window.location.href = "/find";
+}
+
+</script>
+<% } %>

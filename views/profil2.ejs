@@ -1,0 +1,119 @@
+<%- include ("_partial/_header.ejs"); %>
+<link rel="stylesheet" href="css/profil2.css">
+
+<div class="flex">
+  <div class="flex-items flex-item-90 profil-block">
+    <a href="/home" class="btn btn-profil-retour" type="button">Retour</a>
+
+    <div class="entete entete-normal">
+      <h2><u>Profil</u></h2>
+      <img src="images/profil.png" class="img-profil" alt="">
+      <p><b>Nom :</b>
+        <% if(user.nom) {%>
+          <%= user.nom %>
+        <%}; %>
+      </p>
+      <p><b>Prénom :</b>
+        <% if(user.prenom) {%>
+          <%= user.prenom %>
+        <%}; %>
+      </p>
+      <p><b>Email :</b>
+        <% if(user.email) {%>
+          <%= user.email %>
+        <%}; %>
+      </p>
+      <button type="button" class="btn btn-envoyer" name="button">Modifier</button>
+    </div>
+
+    <div class="choix">
+      <button type="button" id="animaux" class="btn btn-choix btn-select" onclick="animaux();" name="button">Animaux</button>
+      <button type="button" id="colliers" class="btn btn-choix" onclick="colliers();" name="button">Colliers</button>
+    </div>
+
+    <div class="listes">
+      <div id="ani" class="liste-animaux">
+        <%- include("_partial/profil/_liste_animaux2.ejs"); %>
+      </div>
+      <div id="col" class="liste-colliers">
+        <%- include("_partial/profil/_liste_collier2.ejs"); %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addAnimal" class="modal">
+  <div class="block block-centre1 text-centre">
+    <%- include ("_partial/profil/ajouter/_ajout_animal.ejs"); %>
+  </div>
+</div>
+
+<div id="modifyAnimal" class="modal-on">
+  <% console.log("Modifier est rafraichi"); %>
+  <div class="block block-centre1 text-centre">
+    <%- include ("_partial/profil/modifier/_modifier_animal.ejs"); %>
+  </div>
+</div>
+
+<div id="supprimerAnimal" class="modal">
+  <div class="block block-centre1 text-centre">
+
+    <%- include ("_partial/profil/supprimer/_supprimer_Animal.ejs"); %>
+  </div>
+</div>
+<div id="addCollier" class="modal">
+  <div class="block block-centre1 text-centre">
+    <%- include ("_partial/profil/ajouter/_ajout_collier.ejs"); %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function modifier(){
+    var enteteN = document.getElementsByClassName("entete-normal");
+    var enteteM = document.getElementsByClassName("entete-modifier");
+    console.log(enteteN);
+    console.log(enteteM);
+    enteteN[0].style.display = "none";
+    enteteM[0].style.display = "block";
+  }
+  function annuler(){
+    var enteteN = document.getElementsByClassName("entete-normal");
+    var enteteM = document.getElementsByClassName("entete-modifier");
+    console.log(enteteN);
+    console.log(enteteM);
+    enteteN[0].style.display = "block";
+    enteteM[0].style.display = "none";
+  }
+
+  function colliers(){
+    var btn_animaux = document.getElementById("animaux");
+    var btn_colliers = document.getElementById("colliers");
+    var animaux = document.getElementById("ani");
+    var colliers = document.getElementById("col");
+    animaux.className = "liste-animaux-n";
+    colliers.className  = "liste-colliers-v";
+    btn_animaux.style.backgroundColor = "var(--grisleg)";
+    btn_colliers.style.backgroundColor = "var(--marronleg)";
+  }
+  function animaux(){
+    var btn_animaux = document.getElementById("animaux");
+    var btn_colliers = document.getElementById("colliers");
+    var animaux = document.getElementById("ani");
+    var colliers = document.getElementById("col");
+    colliers.className  = "liste-colliers-n";
+    animaux.className  = "liste-animaux-v";
+    btn_colliers.style.backgroundColor = "var(--grisleg)";
+    btn_animaux.style.backgroundColor = "var(--marronleg)";
+  }
+</script>
+<script type="text/javascript">
+  var elem = document.getElementsByClassName("wrapper-body");
+  var grandir = document.getElementsByClassName("wrapper-entete");
+  console.log(grandir);
+  if (elem[0].scrollHeight > elem[0].clientHeight) {
+    console.log("plus grand");
+    grandir[0].style.paddingRight = "20px";
+  }
+
+</script>
+<%- include("_partial/_footer.ejs"); %>

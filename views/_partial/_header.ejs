@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bienvenue dans mon site</title>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'> -->
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+      <%- include ("_bandeau.ejs"); %>
+        <% if (typeof errors != 'undefined') { %>
+          <div class="message-block">
+            <div class="message message-erreur">
+              <% errors.forEach(error => { %>
+                <li><%= error.message %><% if(error.redirect) { %></li>
+                <li><%- error.redirect %><% } %><% if(error.url) { %><a href="<%- error.url %>"> ici</a> <% } %></li>
+
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+        <% if (typeof validate != 'undefined') { %>
+          <div class="message-block">
+            <div class="message message-success">
+              <% validate.forEach(validate => { %>
+                <li><%= validate.message %></li>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>

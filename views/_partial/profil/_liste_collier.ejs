@@ -1,0 +1,57 @@
+<h2>Liste des colliers</h2>
+<% if(locals.user.colliers[0]){ %>
+<div class="tab-overflow">
+  <div class="wrapper2 wrapper-entete">
+    <p>Collier utilisé</p>
+    <p>Numéros du colliers</p>
+  </div>
+  <div class="wrapper2 wrapper-body">
+    <% for (const collier of locals.user.colliers) { %>
+      <div>
+        <p><% if(collier.id_animal_collier != null) {%> <img src="https://img.icons8.com/android/15/000000/checkmark.png"/> <%}else{%> <img src="https://img.icons8.com/android/15/000000/cancel-2.png"/> <%}%></p>
+        <p><%= collier.numero_collier %></p>
+        <button id="test-<%= collier.id_collier %>" type="button" class="btn btn-modifier" value="<%= collier.id_collier %>" name="<%= collier.numero_collier %>">
+          <img src="https://img.icons8.com/android/15/000000/trash.png"/>
+        </button>
+      </div>
+      <script>
+
+      	// Display a confirm alert
+      	document.querySelector("#test-<%= collier.id_collier %>").addEventListener("click", function() {
+          var selected = document.getElementById('test-<%= collier.id_collier%>');
+          console.log("selected : ");
+          console.log(selected.id);
+          const words = selected.id.split('-');
+          document.cookie = "id="+words[1];
+
+          console.log(document.cookie);
+          let msg = "Veux-tu vraiment supprimer le collier n°" + selected.name;
+      		JSAlert.confirm(msg).then(function(result) {
+
+      			// Check if pressed yes
+      			if (!result)
+      				return;
+
+      			// User pressed yes!
+            window.location.href = "/supprimerCollier";
+      		});
+
+      	});
+
+      </script>
+    <%}%>
+  </div>
+</div>
+<%} else {%>
+<div>
+  <p>Vous n'avez pas de collier</p>
+</div>
+<%}%>
+
+<button type="button" onclick="ajouterCollier();" class="btn btn-envoyer" name="button">Ajouter</button>
+<script type="text/javascript">
+  function ajouterCollier(){
+    var addCollier = document.getElementById("addCollier");
+    addCollier.style.display = "block";
+  }
+</script>

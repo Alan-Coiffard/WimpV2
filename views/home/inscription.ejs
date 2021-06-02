@@ -1,0 +1,368 @@
+<%- include ("../_partial/_header.ejs"); %>
+<div class="block block-centre">
+  <a href="/" class="btn btn-retour" type="button">Retour</a>
+  <div class="container">
+    <h1 class="titre2">Inscription</h1>
+    <p id="warningPassword" style="color: var(--rougeleg); text-decoration: underline;"></p>
+    <form class="inscription inscription-petit" action="/inscription" method="post">
+      <div class="form-block">
+        <!------------Slider du form-------------------->
+        <div class="slider">
+          <div class="slideshow-container">
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+              <fieldset>
+                <legend class="numbertext">1 / 2</legend>
+                <legend>Identitée</legend>
+                <div>
+                  <p id="warningMail" style="color: var(--rougeleg); text-decoration: underline;"></p>
+                  <label for="">Adresse email</label>
+                  <input  type="email"
+                          id="email"
+                          onchange="verifInput();"
+                          placeholder="Adresse mail"
+                          name="email"
+                          value="<% if (typeof email != 'undefined') { %><%= email %><% }%>"
+                          aria-describedby="basic-addon1">
+                </div>
+                <div>
+                  <label for="">Nom</label>
+                  <input  type="text"
+                          placeholder="Nom"
+                          name="nom"
+                          onchange="verifInput();"
+                          id="nom"
+                          value="<% if (typeof nom != 'undefined') { %><%= nom %><% }%>"
+                          aria-describedby="basic-addon1">
+                </div>
+                <div>
+                  <label for="">Prénom</label>
+                  <input  type="text"
+                          placeholder="Prénom"
+                          id="prenom"
+                          onchange="verifInput();"
+                          name="prenom"
+                          value="<% if (typeof prenom != 'undefined') { %><%= prenom %><% }%>"
+                          aria-describedby="basic-addon1">
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="mySlides fade">
+              <fieldset>
+                <legend class="numbertext">2 / 2</legend>
+                <legend>Mot de passe</legend>
+                <div>
+                  <label for="">Mot de passe :      </label>
+                  <input  type="password"
+                          name="password"
+                          id="password"
+                          onkeyup="verifInput();"
+                          placeholder="Mot de passe"
+                          value="<% if (typeof password != 'undefined') { %><%= password %><% }%>"
+                          aria-describedby="basic-addon1">
+                </div>
+                <div>
+                  <label for="">Confirmation :      </label>
+                  <input  type="password"
+                          placeholder="Mot de passe"
+                          id="password2"
+                          onkeyup="verifInput();"
+                          value="<% if (typeof password2 != 'undefined') { %><%= password2 %><% }%>"
+                          aria-describedby="basic-addon1"
+                          name="password2">
+                </div>
+                <p id="warningPassword2" style="color: var(--rougeleg); text-decoration: underline;"></p>
+              </fieldset>
+            </div>
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+          </div>
+          <br>
+        </div>
+        <!---------------------Fin du Slider-------------------------->
+      </div>
+      <input type="submit" id="submit" disabled class="btn btn-envoyer submit" value="Inscription" />
+    </form>
+    <section id="popper-section" class="popper-section ease">
+      <div id="popper-popup" class="ease">
+        <li class="popover__message" id="warningMin" style="text-decoration: underline;">1 Minuscule</li>
+        <li class="popover__message" id="warningMaj" style="text-decoration: underline;">1 Majuscule</li>
+        <li class="popover__message" id="warningChiffre" style="text-decoration: underline;">1 Chiffre</li>
+        <li class="popover__message" id="warningCarac" style="text-decoration: underline;">1 Caractère special</li>
+        <li class="popover__message" id="warningTaille" style="text-decoration: underline;">Entre 8 & 15 caractère</li>
+        <div id="popper-arrow"></div>
+      </div>
+    </section>
+    <a href="/connexion" class="lien">Déjà un compte ?</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const popperButton = document.getElementById('password');
+  const popperPopup = document.querySelector("#popper-popup");
+  const popperSection = document.querySelector("#popper-section");
+  const popperArrow = document.querySelector("#popper-arrow");
+  const popperBody = document.getElementsByClassName("titre2")
+
+  let popperInstance = null;
+
+  //create popper instance
+  function createInstance() {
+    popperInstance = Popper.createPopper(popperButton, popperPopup, {
+    placement: "auto", //preferred placement of popper
+    modifiers: [
+      {
+        name: "offset", //offsets popper from the reference/button
+        options: {
+          offset: [0, 8]
+        }
+      },
+      {
+        name: "flip", //flips popper with allowed placements
+        options: {
+          allowedAutoPlacements: ["right", "left", "top", "bottom"],
+          rootBoundary: "viewport"
+        }
+      }
+    ]
+    });
+  }
+
+  //destroy popper instance
+  function destroyInstance() {
+    if (popperInstance) {
+      popperInstance.destroy();
+      popperInstance = null;
+    }
+  }
+
+  //show and create popper
+  function showPopper() {
+    popperPopup.setAttribute("show-popper", "");
+    popperArrow.setAttribute("data-popper-arrow", "");
+    createInstance();
+  }
+
+  //hide and destroy popper instance
+  function hidePopper() {
+    popperPopup.removeAttribute("show-popper");
+    popperArrow.removeAttribute("data-popper-arrow");
+    destroyInstance();
+  }
+
+  //toggle show-popper attribute on popper to hide or show it with CSS
+  function togglePopper() {
+    if (popperPopup.hasAttribute("show-popper")) {
+      hidePopper();
+    } else {
+      showPopper();
+    }
+  }
+
+  popperButton.addEventListener('focus', function () {
+      console.log("entre");
+      togglePopper();
+    });
+
+  popperButton.addEventListener('focusout', function () {
+      console.log("sortie");
+      togglePopper();
+    });
+
+  // popperButton.addEventListener("focus", function(e){
+  //   e.preventDefault();
+  //   togglePopper();
+  // });
+
+</script>
+
+<script type="text/javascript">
+
+  function verifInput() {
+    var nom = document.getElementById('nom');
+    var prenom = document.getElementById('prenom');
+
+    var email = document.getElementById('email');
+    var warningEmail = document.getElementById('warningEmail');
+
+    var EMAIL_REGEX = /^[a-zA-Z0-9./_-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+
+    if (!EMAIL_REGEX.test(email.value)) {
+      email.style.backgroundColor = "var(--rougeleg)";
+      warningMail.innerHTML = "L'adresse email n'est pas valide";
+      verifemail = false;
+    }else {
+      email.style.backgroundColor = "var(--vertleg)";
+      warningMail.innerHTML = "";
+      verifemail = true;
+    }
+
+    var password = document.getElementById('password');
+    var warningPassword = document.getElementById('warningPassword');
+    var password2 = document.getElementById('password2');
+    var warningPassword2 = document.getElementById('warningPassword2');
+
+    var warningMaj = document.getElementById('warningMaj');
+    var warningMin = document.getElementById('warningMin');
+    var warningChiffre = document.getElementById('warningChiffre');
+    var warningCarac = document.getElementById('warningCarac');
+    var warningTaille = document.getElementById('warningTaille');
+
+
+    var verifnom = false;
+    var verifprenom = false;
+    var verifemail = false;
+    var verifpassword = false;
+    var verifpassword2 = false;
+
+    var PASWWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W+])(?=.{8,15})/;
+
+    var PASWWORD_MIN = /^(?=.*[a-z])/;
+    var PASWWORD_CHIFFRE = /^(?=.*[0-9])/;
+    var PASWWORD_MAJ = /^(?=.*[A-Z])/;
+    var PASWWORD_CARAC_SPE = /^(?=.*[\W+])/;
+    var PASWWORD_NB_CARAC = /^(?=.{8,})/;
+
+    // warningMaj
+    // warningChiffre
+    // warningCarac
+    // warningTaille
+
+    // finir de placer les verif et les warning pour le fonctionnement
+    var verifpasswordSize = false;
+    var verifpasswordCara = false;
+    var verifpasswordMaj = false;
+    var verifpasswordMin = false;
+    var verifpasswordChi = false;
+
+    if (!PASWWORD_MIN.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      warningMin.style.color = "var(--rougeleg)";
+      verifpasswordMin = false;
+    } else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningMin.style.color = "var(--vertleg)";
+      verifpasswordMin = true;
+    }
+
+    if (!PASWWORD_NB_CARAC.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      warningTaille.style.color = "var(--rougeleg)";
+      verifpasswordSize = false;
+    } else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningTaille.style.color = "var(--vertleg)";
+      verifpasswordSize = true;
+    }
+
+    if (!PASWWORD_CARAC_SPE.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      warningCarac.style.color = "var(--rougeleg)";
+      verifpasswordCara = false;
+    } else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningCarac.style.color = "var(--vertleg)";
+      verifpasswordCara = true;
+    }
+
+    if (!PASWWORD_MAJ.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      warningMaj.style.color = "var(--rougeleg)";
+      verifpasswordMaj = false;
+    } else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningMaj.style.color = "var(--vertleg)";
+      verifpasswordMaj = true;
+    }
+
+    if (!PASWWORD_CHIFFRE.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      warningChiffre.style.color = "var(--rougeleg)";
+      verifpasswordChi = false;
+    } else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningChiffre.style.color = "var(--vertleg)";
+      verifpasswordChi = true;
+    }
+
+    if (!PASWWORD_REGEX.test(password.value)) {
+      password.style.backgroundColor = "var(--rougeleg)";
+      if (password.value == null) {
+        warningPassword.innerHTML = "Le mot de passe n'est pas correct : <ul><li>8 caractere minimum</li><li>Une ou plusieur minuscule</li><li>Un ou plusieur chiffre</li><li>Un ou plusieur caractere spécial</li><li>Une ou plusieur majuscule</li></ul>";
+      }
+      verifpassword = false;
+    }else {
+      password.style.backgroundColor = "var(--vertleg)";
+      warningPassword.innerHTML = "";
+      verifpassword = true;
+      if (password.value != password2.value) {
+        if (password2.value != "") {
+          password2.style.backgroundColor = "var(--rougeleg)";
+          warningPassword2.innerHTML = "Les mots de passe ne correspondent pas";
+        }
+        verifpassword2 = false;
+      }else {
+        password2.style.backgroundColor = "var(--vertleg)";
+        warningPassword2.innerHTML = "";
+        verifpassword2 = true;
+      }
+    }
+
+
+
+    if (nom.value != "") {
+      nom.style.backgroundColor = "var(--vertleg)";
+      verifnom = true;
+    } else {
+      nom.style.backgroundColor = "var(--rougeleg)";
+      verifnom = false;
+    }
+
+    if (prenom.value != "") {
+      prenom.style.backgroundColor = "var(--vertleg)";
+      verifprenom = true;
+    } else {
+      prenom.style.backgroundColor = "var(--rougeleg)";
+      verifprenom = false;
+    }
+
+    if( verifprenom == true && verifnom == true && verifemail == true && verifpassword == true && verifpassword2 == true ){
+      document.getElementById("submit").disabled = false;
+      document.getElementById("submit").style.backgroundColor = "var(--marronleg)";
+    }else {
+      document.getElementById("submit").disabled = true;
+      document.getElementById("submit").style.backgroundColor = "var(--grisleg)";
+    }
+  }
+
+  var slideIndex = 1;
+  showSlides(slideIndex);
+
+  // Next/previous controls
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+  // Thumbnail image controls
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
+  }
+
+  function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";
+  }
+</script>
+<%- include ("../_partial/_footer.ejs"); %>
