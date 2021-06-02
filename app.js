@@ -11,6 +11,7 @@ const path = require('path');
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 
+
 //Definie "app" comme variable de express qui permet de faire une grande partie du serveur
 const app = express();
 
