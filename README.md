@@ -1,2 +1,0 @@
-# wimp
-projet étudiant
