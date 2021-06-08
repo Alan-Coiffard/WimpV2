@@ -7,11 +7,30 @@ var router = express.Router();
 router.use(function(req, res, next){
   //console.log('Dans index : ', req.session.colliers);
   //console.log('Dans index -> res.locals.user : ', req.session);
+  if (req.session.validate) {
+    console.log("Validate", req.session.validate);
+    res.locals.validate = req.session.validate
+    req.session.validate = undefined
+  }
+  if (req.session.error) {
+    res.locals.error = req.session.error
+    req.session.error = undefined
+  }
+  if (req.session.message) {
+    res.locals.message = req.session.message
+    req.session.message = undefined
+  }
+  if (req.session.link) {
+    res.locals.link = req.session.link
+    req.session.link = undefined
+  }
   res.locals.user = req.session;
   next();
 });
 
 router.use("/", require("./home"));
+
+router.use("/api/animal", require("./home"));
 
 router.use("/home", require("./home"));
 

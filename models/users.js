@@ -41,7 +41,11 @@ const signup = (request, response) => {
   }
 
   if (errors.length > 0) {
-    response.render("home/inscription", { errors, nom, prenom, email, password, password2 });
+    request.session.error = errors
+    //request.session.message = "inscrivez-vous"
+    //request.session.link = "/inscription"
+    response.redirect('/inscription')
+    //response.render("home/inscription", { errors, nom, prenom, email, password, password2 });
   } else {
     findUser(user)
       .then(foundUser => {
@@ -60,13 +64,22 @@ const signup = (request, response) => {
               request.session.prenom = user.prenom;
               request.session.email = user.email;
 
+              request.session.validate = "Bienvenue"
+              //request.session.message = "Connectez-vous"
+              // request.session.link = "/connexion"
+              // response.redirect('/inscription')
               response.redirect('/findHome');
             })
             .catch((err) => console.error(err))
         } else {
-          errors.push({ message: "Email est déjà enregistré, vous pouvez vous connecter" });
-          errors.push({ url: "/connexion" });
-          response.render("home/inscription", { errors, nom, prenom, email, password, password2 });
+          request.session.error = "Email est déjà enregistré, vous pouvez vous connecter"
+          //request.session.message = "Connectez-vous"
+          request.session.link = "/connexion"
+          response.redirect('/inscription')
+
+          // errors.push({ message: "Email est déjà enregistré, vous pouvez vous connecter" });
+          // errors.push({ url: "/connexion" });
+          // response.render("home/inscription", { errors, nom, prenom, email, password, password2 });
         }
         return foundUser
       })
@@ -154,7 +167,11 @@ const modifyProfil = (request, response) => {
   }
 
   if (errors.length > 0) {
-    response.render("./profil", { errors, nom, prenom, email });
+    request.session.error = errors
+    //request.session.message = "Connectez-vous"
+    // request.session.link = "/connexion"
+    response.redirect('/inscription')
+    // response.render("./profil", { errors, nom, prenom, email });
   } else {
     findUser(user)
       .then(foundUser => {
@@ -171,8 +188,12 @@ const modifyProfil = (request, response) => {
           })
           .catch((err) => console.error(err))
         } else {
-          errors.push({ message: "Email already registered" });
-          response.render("./profil", { errors, nom, prenom, email });
+          request.session.error = "Email already registered"
+          //request.session.message = "Connectez-vous"
+          // request.session.link = "/connexion"
+          response.redirect('/profil')
+          // errors.push({ message: "Email already registered" });
+          // response.render("./profil", { errors, nom, prenom, email });
         }
         return foundUser
       })
@@ -198,6 +219,10 @@ const signin = (request, response) => {
       request.session.prenom = user.prenom;
       request.session.email = user.email;
 
+      request.session.validate = "Bienvenue " + user.nom + " " + user.prenom + " !"
+      //request.session.message = "Connectez-vous"
+      // request.session.link = "/connexion"
+      // response.redirect('/inscription')
       response.redirect('/findHome');
       //response.status(200).json(user);
     })
@@ -205,10 +230,14 @@ const signin = (request, response) => {
       //console.error("coucou : ", err);
       let message = "";
       console.log(err);
-      errors.push({ message: "Erreur: Email/Mot de passe incorrect" });
-      errors.push({ redirect: "inscrivez-vous" });
-      errors.push({ url: "/inscription" });
-      response.render("home/connexion", { errors });
+      request.session.error = "Erreur: Email/Mot de passe incorrect ! "
+      request.session.message = "Inscrivez-vous"
+      request.session.link = "/inscription"
+      response.redirect('/connexion')
+      // errors.push({ message: "Erreur: Email/Mot de passe incorrect" });
+      // errors.push({ redirect: "inscrivez-vous" });
+      // errors.push({ url: "/inscription" });
+      // response.render("home/connexion", { errors });
     })
 }
 
@@ -219,14 +248,15 @@ const findAll = (request, response) => {
   //console.log(request.session.id_client);
   let errors = []
   let validate = [];
-  if (typeof validate != 'undefined') {
-    console.log("coucou", validate.message);
-  }
   if (!request.session.id_client) {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    response.render("home/connexion", { errors });
+    request.session.error = errors
+    // request.session.message = "inscrivez-vous"
+    request.session.link = "/connexion"
+    response.redirect('/')
+    // response.render("home/connexion", { errors });
   } else {
     _findAnimal(request.session.id_client)
       .then(foundAnimals => {
@@ -251,13 +281,13 @@ const findAll = (request, response) => {
         console.log("---------------------------------------------------------------------colliers");
         request.session.colliers = colliers;
 
-        console.log("Validate : ", request.session.validate);
-        if (request.session.validate == undefined) {
-          response.redirect('/profil');
-        }else {
-          validate.push({ message: request.session.validate });
-          response.render('./profil', { validate });
-        }
+        request.session.error = response.locals.error
+        request.session.message = response.locals.message
+        request.session.link = response.locals.link
+        request.session.validate = response.locals.validate
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/profil')
         //response.status(200).json(user);
       })
       .catch((err) => console.error(err))
@@ -272,7 +302,11 @@ const findHome = (request, response) => {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    response.render("home/connexion", { errors });
+    request.session.error = errors
+    // request.session.message = "inscrivez-vous"
+    request.session.link = "/connexion"
+    response.redirect('/')
+    // response.render("home/connexion", { errors });
   } else {
     _findAnimal(request.session.id_client)
       .then(foundAnimals => {
@@ -298,7 +332,16 @@ const findHome = (request, response) => {
         //console.log("Colliers: ", colliers);
         console.log("---------------------------------------------------------------------colliers");
         request.session.colliers = colliers;
-        response.redirect('/home');
+
+        console.log(response.locals.validate);
+
+        request.session.error = response.locals.error
+        request.session.message = response.locals.message
+        request.session.link = response.locals.link
+        request.session.validate = response.locals.validate
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/home')
         //response.status(200).json(user);
       })
       .catch((err) => console.error(err))
@@ -339,7 +382,11 @@ const findType = (request, response) => {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    response.render("home/connexion", { errors });
+    request.session.error = errors
+    // request.session.message = "inscrivez-vous"
+    request.session.link = "/connexion"
+    response.redirect('/')
+    // response.render("home/connexion", { errors });
   }else {
     _findType(request.session.id_client)
       .then(foundType => {
@@ -369,7 +416,7 @@ const _findType = (id_client)  => {
 
 const ajoutAnimal = (request, response) => {
   const animal = request.body
-  console.log(animal);
+  //console.log(animal);
   let errors = [];
   let validate = [];
   let { nom_animal, type, naissance_animal, distance, id_collier } = request.body;
@@ -382,7 +429,7 @@ const ajoutAnimal = (request, response) => {
   if (animal.id_collier == '') {
     animal.id_collier = null;
   }
-  console.log(id_collier);
+  //console.log(id_collier);
   if (!nom_animal || !type || !naissance_animal) {
     errors.push({ message: "Please enter all fields" });
   }
@@ -391,13 +438,21 @@ const ajoutAnimal = (request, response) => {
   }
 
   if (errors.length > 0) {
-    response.render("./profil", errors);
+    request.session.error = errors
+    // request.session.message = "inscrivez-vous"
+    // request.session.link = "/inscription"
+    response.redirect('/profil')
+    // response.render("./profil", errors);
   } else {
     return createAnimal(animal, id_client)
       .then(animalCree => {
-        request.session.validate = animal.nom_animal + " a bien été ajouté";
+        request.session.validate = animal.nom_animal + " a bien été ajouté"
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/find')
+        // request.session.validate = animal.nom_animal + " a bien été ajouté";
         //validate.push({ message: animal.nom_animal });
-        response.redirect('/find');
+        // response.redirect('/find');
       })
       .catch((err) => console.error(err))
   }
@@ -435,7 +490,7 @@ const findAnimalById = (id_animal) => {
 }
 
 const supprimerAnimal = (request, response) => {
-  console.log("Les cookies ", request.cookies.id);
+  // console.log("Les cookies ", request.cookies.id);
   let errors = []
   let id_animal = request.cookies.id;
   findAnimalById(id_animal)
@@ -454,19 +509,31 @@ const supprimerAnimal = (request, response) => {
               [foundAnimal.id_animal]
             )
             .then(() => {
-              request.session.validate = foundAnimal.nom_animal + " a bien été supprimé";
-              response.redirect('/find');
+              request.session.validate = foundAnimal.nom_animal + " a bien été supprimé"
+              // request.session.message = "inscrivez-vous"
+              // request.session.link = "/inscription"
+              response.redirect('/find')
+              // request.session.validate = foundAnimal.nom_animal + " a bien été supprimé";
+              // response.redirect('/find');
             })
             .catch((err) => {
-              console.error(err)
-              errors.push({ message: err });
-              response.render("/profil", { errors });
+              request.session.error = err
+              // request.session.message = "inscrivez-vous"
+              // request.session.link = "/inscription"
+              response.redirect('/profil')
+              // console.error(err)
+              // errors.push({ message: err });
+              // response.render("/profil", { errors });
             })
           })
           .catch((err) => {
+            request.session.error = err
+            // request.session.message = "inscrivez-vous"
+            // request.session.link = "/inscription"
+            response.redirect('/profil')
             console.error(err)
             errors.push({ message: err });
-            response.render("/profil", { errors });
+            // response.render("/profil", { errors });
           })
         } else {
           return database.raw(
@@ -474,25 +541,44 @@ const supprimerAnimal = (request, response) => {
             [foundAnimal.id_animal]
           )
           .then(() => {
-            request.session.validate = foundAnimal.nom_animal + " a bien été supprimé";
-            response.redirect('/find');
+            request.session.error = foundAnimal.nom_animal + " a bien été supprimé"
+            // request.session.message = "inscrivez-vous"
+            // request.session.link = "/inscription"
+            response.redirect('/find')
+            // request.session.validate = foundAnimal.nom_animal + " a bien été supprimé";
+            // response.redirect('/find');
           })
           .catch((err) => {
+            request.session.error = err
+            // request.session.message = "inscrivez-vous"
+            // request.session.link = "/inscription"
+            response.redirect('/find')
             console.error(err)
-            errors.push({ message: err });
-            response.render("/profil", { errors });
+            // errors.push({ message: err });
+            // console.error(err)
+            // errors.push({ message: err });
+            // response.render("/profil", { errors });
           })
         }
       } else {
-        errors.push({ message: "Vous n'avez pas cet animal" });
-        response.render("/profil", { errors });
+        request.session.error = "Vous n'avez pas cet animal"
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/profil')
+        // console.error(err)
+        // errors.push({ message: "Vous n'avez pas cet animal" });
+        // response.render("/profil", { errors });
       }
       return foundAnimal
     })
     .catch((err) => {
-      console.error(err)
-      errors.push({ message: err });
-      response.render("./profil", { errors });
+      request.session.error = err
+      // request.session.message = "inscrivez-vous"
+      // request.session.link = "/inscription"
+      response.redirect('/profil')
+      // console.error(err)
+      // errors.push({ message: err });
+      // response.render("./profil", { errors });
     })
 }
 
@@ -514,27 +600,39 @@ const ajoutCollier = (request, response) => {
   }
 
   if (errors.length > 0) {
-    response.render("./profil", errors);
+    request.session.error = errors
+    // request.session.message = "inscrivez-vous"
+    // request.session.link = "/inscription"
+    response.redirect('/profil')
+    // response.render("./profil", errors);
   } else {
     findCollier(collier)
       .then(foundCollier => {
         //console.log("foundUser", foundUser);
         //console.log("user mail : ", user.email);
         //console.log("foundUser mail : ", foundUser.email);
-        console.log(foundCollier);
+        // console.log(foundCollier);
         if (!foundCollier) {
           createCollier(collier, id_client)
             .then(creer => {
-              console.log(creer);
-              request.session.validate = "Le collier a bien été ajouté";
-              response.redirect('/find');
+              request.session.validate = "Le collier a bien été ajouté"
+              // request.session.message = "inscrivez-vous"
+              // request.session.link = "/inscription"
+              response.redirect('/find')
+              // console.log(creer);
+              // request.session.validate = "Le collier a bien été ajouté";
+              // response.redirect('/find');
             })
             .catch((err) => {
               console.error(err)
             })
         } else {
-          errors.push({ message: "Numéro de collier déjà utilisé" });
-          response.render("./profil", { errors });
+          request.session.validate = "Numéro de collier déjà utilisé"
+          // request.session.message = "inscrivez-vous"
+          // request.session.link = "/inscription"
+          response.redirect('/profil')
+          // errors.push({ message: "Numéro de collier déjà utilisé" });
+          // response.render("./profil", { errors });
         }
         return foundCollier
       })
@@ -572,25 +670,36 @@ const supprimerCollier = (request, response) => {
   let id_collier = request.cookies.id;
   findCollierById(id_collier)
     .then(foundCollier => {
-      console.log(foundCollier);
+      // console.log(foundCollier);
       if (foundCollier) {
         return database.raw(
           "DELETE FROM colliers WHERE id_collier = ?",
           [foundCollier.id_collier]
         )
         .then(() => {
-          request.session.validate = "Collier : " + foundCollier.numero_collier + " a bien été supprimé";
-          response.redirect('/find');
+          request.session.validate = "Collier : " + foundCollier.numero_collier + " a bien été supprimé"
+          // request.session.message = "inscrivez-vous"
+          // request.session.link = "/inscription"
+          response.redirect('/find')
+          // request.session.validate = "Collier : " + foundCollier.numero_collier + " a bien été supprimé";
           //response.redirect('/find');
         })
         .catch((err) => {
-          console.error(err)
-          errors.push({ message: "Le collier est toujours utilisé" });
-          response.render("./profil", { errors });
+          request.session.error = "Le collier est toujours utilisé"
+          // request.session.message = "inscrivez-vous"
+          // request.session.link = "/inscription"
+          response.redirect('/profil')
+          // console.error(err)
+          // errors.push({ message: "Le collier est toujours utilisé" });
+          // response.render("./profil", { errors });
         })
       } else {
-        errors.push({ message: "Vous n'avez pas ce collier" });
-        response.render("./profil", { errors });
+        request.session.validate = "Vous n'avez pas ce collier"
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/profil')
+        // errors.push({ message: "Vous n'avez pas ce collier" });
+        // response.render("./profil", { errors });
       }
       return foundCollier
     })
@@ -601,7 +710,7 @@ const supprimerCollier = (request, response) => {
 const modifierAnimal = (request, response) => {
   console.log("Modification...");
   const animal = request.body
-  console.log(animal);
+  // console.log(animal);
   let errors = [];
   let validate = [];
   let { nom_animal, type, naissance_animal, distance, id_collier } = request.body;
@@ -612,48 +721,66 @@ const modifierAnimal = (request, response) => {
   }
 
   if (animal.id_collier == "" || animal.id_collier == " ") {
-    console.log("collier enlevé");
+    // console.log("collier enlevé");
     animal.id_collier = null;
   }
   //console.log(id_collier);
   if (!nom_animal || !type ) {
-    console.log("3");
+    // console.log("3");
     errors.push({ message: "Please enter all fields" });
   }
 
   if (errors.length > 0) {
-    console.log("Et ça repart");
-    response.render("./profil", errors);
+    request.session.validate = errors
+    // request.session.message = "inscrivez-vous"
+    // request.session.link = "/inscription"
+    response.redirect('/profil')
+    // console.log("Et ça repart");
+    // response.render("./profil", errors);
   } else {
     console.log("commence la modif");
     return _modifyAnimal(animal)
       .then(animalModifie => {
-        request.session.validate = animalModifie.nom_animal + " a bien été modifié";
-        validate.push({ message: "Animal bien modifié !" });
-        response.redirect('/find');
+        console.log("animal modifie : ", animalModifie);
+        // console.log("User -> verif animalMessageModifier : ", animalModifie.nom_animal + " a bien été modifié");
+        request.session.validate = animalModifie.nom_animal + " a bien été modifié"
+        // request.session.message = "inscrivez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/find')
+        // request.session.validate = animalModifie.nom_animal + " a bien été modifié";
+        // validate.push({ message: "Animal bien modifié !" });
+        // response.redirect('/find');
       })
       .catch((err) => console.error(err))
   }
 }
 
 const _modifyAnimal = (animal) => {
-  console.log("_modifyAnimal : ", animal);
+  // console.log("_modifyAnimal : ", animal);
   return database.raw(
     "UPDATE animaux SET nom_animal = ?, naissance_animal = ?, type_animal = ?, distance = ?, id_collier = ? WHERE id_animal = ? RETURNING id_animal, nom_animal, naissance_animal, type_animal, distance, id_collier, id_utilisateur",
     [animal.nom_animal, animal.naissance_animal, animal.type, animal.distance, animal.id_collier, animal.id_animal]
   )
   .then((data) => {
-    console.log("data.rows[0] : ", data.rows[0]);
-    if (data.rows[0].id_collier == null) {
+    // console.log("data.rows[0] : ", data.rows[0]);
+    if (animal.id_collier == null) {
       return database.raw(
         "UPDATE colliers SET id_animal_collier = ? WHERE id_animal_collier = ?",
         [null, data.rows[0].id_animal]
       )
+      .then(() => {
+        // console.log("Data : ", data.rows[0]);
+        return data.rows[0]
+      })
     }else {
       return database.raw(
         "UPDATE colliers SET id_animal_collier = ? WHERE id_collier = ?",
         [data.rows[0].id_animal, data.rows[0].id_collier]
       )
+      .then(() => {
+        // console.log("Data : ", data.rows[0]);
+        return data.rows[0]
+      })
     }
   })
 }
@@ -669,19 +796,19 @@ const entreModif = (request, response) => {
       //response.locals.user = foundAnimal.rows[0];
       //response.status(200).json(foundAnimal.rows[0])
       let animal = foundAnimal.rows[0];
-      console.log(animal);
+      // console.log(animal);
 
 
       let naissance = JSON.stringify(animal.naissance_animal);
       var sepa = split(naissance, { separator: 'T' })
       sepa[0] = sepa[0].replace('"',"");
-      console.log(sepa[0]);
+      // console.log(sepa[0]);
       var date = JSON.stringify(sepa[0]);
-      console.log(date);
+      // console.log(date);
       date = split(date, { separator: '-' });
       date[0] = date[0].replace('"',"");
       date[2] = date[2].replace('"',"");
-      console.log(date);
+      // console.log(date);
       //console.log(split(test, { separator: 'T' }));
 
 

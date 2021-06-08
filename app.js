@@ -70,7 +70,7 @@ app.use(flash());
 
 //Defini la route que le serveur doit utiliser pour chercher les route pour les pages selon l'url
 app.use("/", require("./routes/web"));
-app.use("/api", require("./routes/api"));
+//app.use("/api", require("./routes/api"));
 
 // const Api = require('models/users.js');
 // app.post('/selectAnimal', Api.SelectId);

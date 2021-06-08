@@ -1,4 +1,5 @@
 const User = require('../../models/users.js');
+const Api = require('../../models/api.js');
 
 var express = require("express");
 var passport = require('passport');
@@ -6,6 +7,11 @@ const bcrypt = require('bcrypt');
 
 
 var router = express.Router();
+
+//Partie Api
+
+router.post('/api/animal', Api.afficherAnimal);
+
 
 //router.get() sert à faire une action en fonction de l'url
 //exemple pour le premier

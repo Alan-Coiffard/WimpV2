@@ -9,6 +9,6 @@ router.use(function(req, res, next){
   next();
 });
 
-router.use("/animal", require("./api"));
+router.use("/api/animal", require("./api"));
 
 module.exports = router;

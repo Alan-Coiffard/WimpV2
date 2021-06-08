@@ -189,16 +189,6 @@
 
     var EMAIL_REGEX = /^[a-zA-Z0-9./_-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
-    if (!EMAIL_REGEX.test(email.value)) {
-      email.style.backgroundColor = "var(--rougeleg)";
-      warningMail.innerHTML = "L'adresse email n'est pas valide";
-      verifemail = false;
-    }else {
-      email.style.backgroundColor = "var(--vertleg)";
-      warningMail.innerHTML = "";
-      verifemail = true;
-    }
-
     var password = document.getElementById('password');
     var warningPassword = document.getElementById('warningPassword');
     var password2 = document.getElementById('password2');
@@ -217,7 +207,7 @@
     var verifpassword = false;
     var verifpassword2 = false;
 
-    var PASWWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W+])(?=.{8,15})/;
+    var PASWWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})(?=.*[\W+])/;
 
     var PASWWORD_MIN = /^(?=.*[a-z])/;
     var PASWWORD_CHIFFRE = /^(?=.*[0-9])/;
@@ -238,60 +228,51 @@
     var verifpasswordChi = false;
 
     if (!PASWWORD_MIN.test(password.value)) {
-      password.style.backgroundColor = "var(--rougeleg)";
       warningMin.style.color = "var(--rougeleg)";
       verifpasswordMin = false;
     } else {
-      password.style.backgroundColor = "var(--vertleg)";
       warningMin.style.color = "var(--vertleg)";
       verifpasswordMin = true;
     }
 
     if (!PASWWORD_NB_CARAC.test(password.value)) {
-      password.style.backgroundColor = "var(--rougeleg)";
       warningTaille.style.color = "var(--rougeleg)";
       verifpasswordSize = false;
     } else {
-      password.style.backgroundColor = "var(--vertleg)";
       warningTaille.style.color = "var(--vertleg)";
       verifpasswordSize = true;
     }
 
     if (!PASWWORD_CARAC_SPE.test(password.value)) {
-      password.style.backgroundColor = "var(--rougeleg)";
       warningCarac.style.color = "var(--rougeleg)";
       verifpasswordCara = false;
     } else {
-      password.style.backgroundColor = "var(--vertleg)";
       warningCarac.style.color = "var(--vertleg)";
       verifpasswordCara = true;
     }
 
     if (!PASWWORD_MAJ.test(password.value)) {
-      password.style.backgroundColor = "var(--rougeleg)";
       warningMaj.style.color = "var(--rougeleg)";
       verifpasswordMaj = false;
     } else {
-      password.style.backgroundColor = "var(--vertleg)";
       warningMaj.style.color = "var(--vertleg)";
       verifpasswordMaj = true;
     }
 
     if (!PASWWORD_CHIFFRE.test(password.value)) {
-      password.style.backgroundColor = "var(--rougeleg)";
       warningChiffre.style.color = "var(--rougeleg)";
       verifpasswordChi = false;
     } else {
-      password.style.backgroundColor = "var(--vertleg)";
       warningChiffre.style.color = "var(--vertleg)";
       verifpasswordChi = true;
     }
-
-    if (!PASWWORD_REGEX.test(password.value)) {
+    // var verifpasswordSize = false;
+    // var verifpasswordCara = false;
+    // var verifpasswordMaj = false;
+    // var verifpasswordMin = false;
+    // var verifpasswordChi = false;
+    if (!verifpasswordSize || !verifpasswordMaj || !verifpasswordMin || !verifpasswordChi || !verifpasswordCara) {
       password.style.backgroundColor = "var(--rougeleg)";
-      if (password.value == null) {
-        warningPassword.innerHTML = "Le mot de passe n'est pas correct : <ul><li>8 caractere minimum</li><li>Une ou plusieur minuscule</li><li>Un ou plusieur chiffre</li><li>Un ou plusieur caractere spécial</li><li>Une ou plusieur majuscule</li></ul>";
-      }
       verifpassword = false;
     }else {
       password.style.backgroundColor = "var(--vertleg)";
@@ -310,7 +291,15 @@
       }
     }
 
-
+    if (!EMAIL_REGEX.test(email.value)) {
+      email.style.backgroundColor = "var(--rougeleg)";
+      warningMail.innerHTML = "L'adresse email n'est pas valide";
+      verifemail = false;
+    }else {
+      email.style.backgroundColor = "var(--vertleg)";
+      warningMail.innerHTML = "";
+      verifemail = true;
+    }
 
     if (nom.value != "") {
       nom.style.backgroundColor = "var(--vertleg)";
@@ -328,10 +317,14 @@
       verifprenom = false;
     }
 
+    //console.log("Prenom : ", verifprenom," | Nom : ", verifnom," | Mail : ", verifemail," | Password : ", verifpassword," | VerifP : ", verifpassword2);
+
     if( verifprenom == true && verifnom == true && verifemail == true && verifpassword == true && verifpassword2 == true ){
+      console.log("c bon");
       document.getElementById("submit").disabled = false;
       document.getElementById("submit").style.backgroundColor = "var(--marronleg)";
     }else {
+      console.log("nest pas bon");
       document.getElementById("submit").disabled = true;
       document.getElementById("submit").style.backgroundColor = "var(--grisleg)";
     }

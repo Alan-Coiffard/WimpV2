@@ -11,23 +11,24 @@
   </head>
   <body>
       <%- include ("_bandeau.ejs"); %>
-        <% if (typeof errors != 'undefined') { %>
+
+        <% if (locals.error) { %>
           <div class="message-block">
             <div class="message message-erreur">
-              <% errors.forEach(error => { %>
-                <li><%= error.message %><% if(error.redirect) { %></li>
-                <li><%- error.redirect %><% } %><% if(error.url) { %><a href="<%- error.url %>"> ici</a> <% } %></li>
-
-              <% }) %>
+              <%= locals.error %>
+              <% if (locals.message) { %>
+                <%= locals.message %>
+              <%}%>
+              <% if (locals.link) { %>
+                <a class="lien2" href="<%- locals.link %>"> ici</a>
+              <%}%>
             </div>
           </div>
         <% } %>
-        <% if (typeof validate != 'undefined') { %>
+        <% if (locals.validate) { %>
           <div class="message-block">
             <div class="message message-success">
-              <% validate.forEach(validate => { %>
-                <li><%= validate.message %></li>
-              <% }) %>
+              <%= locals.validate %>
             </div>
           </div>
         <% } %>

@@ -72,6 +72,14 @@ a {
   padding-top: 10px;
 }
 
+.lien2 {
+  all: revert;
+  text-decoration: underline;
+  font-size: 15px;
+  padding-top: 10px;
+  color: white;
+}
+
 h1 {
   all: unset;
   color: black;

@@ -36,10 +36,10 @@
         <%}else{%>
           Vous n'avez pas encore d'animal
         <%}%>
-        <% if (locals.user.idAnimalSelect) { console.log("Reussie : ", locals.user.idAnimalSelect); %>
+        <% if (locals.user.idAnimalSelect) { %>
           <% if (locals.user.animaux) { %>
             <% for (const animal of locals.user.animaux) { %>
-              <% if (animal.id_animal == locals.user.idAnimalSelect) {  console.log(animal.age_animal);%>
+              <% if (animal.id_animal == locals.user.idAnimalSelect) { %>
 
                 <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
                 <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
@@ -79,17 +79,16 @@
                       margin-top: 10px;
                   ">
                 </form>
-                <% console.log(locals.user); %>
 
               <%}else{%>
                 Vous n'avez pas encore d'animal
               <%}%>
               <!-- <input type="text" name="" value="Types">
               <input type="text" name="" value="Age"> -->
-              <% if (locals.user.idSelect) { console.log("Reussie : ", locals.user.idSelect); %>
+              <% if (locals.user.idSelect) { %>
                 <% if (locals.user.animaux) { %>
                   <% for (const animal of locals.user.animaux) { %>
-                    <% if (animal.id_animal == locals.user.idSelect) {  console.log(animal.age_animal);%>
+                    <% if (animal.id_animal == locals.user.idSelect) { %>
 
                       <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
                       <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
@@ -115,11 +114,9 @@
     let animaux = [];
     animaux = <%- JSON.stringify(locals.user.animaux) %>;
   <% } %>
-  console.log(animaux);
   const selectElement = document.getElementById('selectAnimaux');
   selectElement.addEventListener('change', (event) => {
     //alert(event.target.value);
-    console.log("Id : ", event.target.value);
     <% var idSelected %>
     var idSelected = event.target.value;
   });
