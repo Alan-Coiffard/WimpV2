@@ -1,12 +1,5 @@
-// const { Client } = require("pg");
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'wimp',
-//   password: 'root',
-//   port: '5432',
-// });
-// client.connect();
+const fs = require("./Fonctions.js");
+
 // On initialise la latitude et la longitude de l'habitation du client (centre de la carte)
 // Au préalable séléctionné/donné par l'utilisateur, dans le cas contraire:
 // Se positionner sur Paris.
@@ -17,84 +10,12 @@
         var markerClusters; // Servira à stocker les groupes de marqueurs
         var zoom = 12; // Etablit la profondeur du zoom sur lequel la map se charge
 
-        function StartZoom(){
-          var zoomF;
-
-        }
-
-        function trie(e){
-
-        }
-
-        function SelectId(){
-          const selectElement = document.getElementById('selectAnimaux');
-          selectElement.addEventListener('change', (event) => {
-            alert(event.target.value);
-          });
-        }
-
-
-        function Routage(){
-
-        }
-
-        // const _findCollier = (id_client) => {
-        //   let request = database.raw("SELECT * FROM colliers WHERE id_client = ?", [id_client], (err, res) => {
-        //     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
-        //     database.end()
-        //   })
-        //   return request
-        // }
-        // _findCollier(request.session.id_client)
-        //  .then(foundCollier => {
-        //    console.log(foundCollier);
-        //  })
-
 
         // Nous initialisons un tableau city qui contiendra les "ville"
         //list = nombre d'enregistrement fait par le GPS, sur la BDD, encore accessible
         var list = 0;
         let city = new Array(list);
 
-        //fonction donnant un nombre random entre un min et un max
-        function initCoord(min, max){
-          min = min;
-          max = max;
-          return Math.random() * (max - min) + min;
-        }
-
-        // Fonction d'initialisation de points (randoms) sur la carte
-        function initPoint() {
-          for (let point = 0; point < 10; point++){
-
-            // Pour la France et ses alentours:
-            //Lat = initCoord(42, 51);
-            //Lon = initCoord(-4, 8);
-
-            // Pour la Bretagne et ses alentours:
-            // Lat = initCoord(47.97, 48.5);
-            // Lon = initCoord(-4, -1);
-            // Alt = initCoord(-4, 20);
-
-            // // Pour Lannion et ses alentours:
-            Lat = initCoord(48.7861, 48.7041);
-            Lon = initCoord(-3.5499, -3.3877);
-            Alt = initCoord(-4, 20);
-
-            // Pour la vallé du Stanco et ses alentours:
-            // Lat = initCoord(48.73565081538279, 48.73746224718652);//48.73746224718652, -3.450671274438872
-            // Lon = initCoord(-3.4550969193093337, -3.450671274438872);
-            // Alt = initCoord(-4, 20);
-
-            var ville = new Object();
-            ville.id = point;
-            ville.lat = Lat;
-            ville.lon = Lon;
-            ville.alt = Alt;
-            city.push(ville);
-          }
-        }
-        initPoint();
 
         // Fonction d'initialisation de la carte
         function initMap() {
@@ -165,13 +86,14 @@
              console.log(city[ville].lon);
              console.log(city[ville].alt);
 
+             // paragraphe pour les icones actuels
              var LeafIcon = L.Icon.extend({
                   options: {
                      // iconSize:     [25, 50],
                      shadowSize:   [50, 64],
                      iconAnchor:   [12, 40],
                      shadowAnchor: [4, 62],
-                     popupAnchor:  [-3, -76]
+                     popupAnchor:  [-3, -30]
                   }
               });
 
