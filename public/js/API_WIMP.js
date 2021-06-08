@@ -165,13 +165,14 @@
              console.log(city[ville].lon);
              console.log(city[ville].alt);
 
+             // paragraphe pour les icones actuels
              var LeafIcon = L.Icon.extend({
                   options: {
                      // iconSize:     [25, 50],
                      shadowSize:   [50, 64],
                      iconAnchor:   [12, 40],
                      shadowAnchor: [4, 62],
-                     popupAnchor:  [-3, -76]
+                     popupAnchor:  [-3, -30]
                   }
               });
 
