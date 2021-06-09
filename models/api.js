@@ -34,8 +34,26 @@ const afficherAnimal = (request, response) => {
   const idSelect = request.body.listeAnimaux
   console.log(idSelect);
   request.session.idAnimalSelect = idSelect;
-  response.redirect("/home")
+
+  findGPS(idSelect)
+  .then(foundGPS => {
+    request.session.gps = foundGPS;
+    response.redirect('/home');
+  })
+
 }
+
+const stockerGPS = (foundGPS) => {
+  request.session.gps = data;
+}
+
+const findGPS = (idAnimal) => {
+  return database.raw("SELECT * FROM gps WHERE id_Animal = ?", [idAnimal])
+  .then((data) => {
+    return data.rows
+  });
+}
+
 
 module.exports = {
   afficherAnimal

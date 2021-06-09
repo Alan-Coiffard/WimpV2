@@ -14,37 +14,41 @@ var list = 0;
 let city = new Array(list);
 
 function initPoint(city) {
-  for (let point = 0; point < 10; point++){
-
+  for (let point = 0; point < tabGPS.length; point++){
     // Pour la France et ses alentours:
-    //Lat = initCoord(42, 51);
-    //Lon = initCoord(-4, 8);
-
+    // Lat = initCoord(42, 51);
+    // Lon = initCoord(-4, 8);
+    //
     // Pour la Bretagne et ses alentours:
     // Lat = initCoord(47.97, 48.5);
     // Lon = initCoord(-4, -1);
     // Alt = initCoord(-4, 20);
-
-    // Pour Lannion et ses alentours:
-    Lat = initCoord(48.7861, 48.7041);
-    Lon = initCoord(-3.5499, -3.3877);
-    Alt = initCoord(-4, 20);
-
+    //
+    // // Pour Lannion et ses alentours:
+    // Lat = initCoord(48.7861, 48.7041);
+    // Lon = initCoord(-3.5499, -3.3877);
+    // Alt = initCoord(-4, 20);
+    //
     // Pour la vallé du Stanco et ses alentours:
     // Lat = initCoord(48.73565081538279, 48.73746224718652);//48.73746224718652, -3.450671274438872
     // Lon = initCoord(-3.4550969193093337, -3.450671274438872);
     // Alt = initCoord(-4, 20);
 
+
     var ville = new Object();
     ville.id = point;
-    ville.lat = Lat;
-    ville.lon = Lon;
-    ville.alt = Alt;
+    ville.lat = tabGPS[point].latitude;
+    ville.lon = tabGPS[point].longitude;
+    ville.alt = tabGPS[point].altitude;
     city.push(ville);
-    if (ville.id > 0) {
-      trie(ville);
-    }
+
   }
+
+
+
+  // if (ville.id > 0) {
+  //   trie(ville);
+  // }
 }
 
 // Fonction d'initialisation de la carte
@@ -133,7 +137,7 @@ function initMap() {
              shadowSize:   [50, 64],
              iconAnchor:   [12, 40],
              shadowAnchor: [4, 62],
-             popupAnchor:  [-3, -76]
+             popupAnchor:  [-3, -30]
           }
       });
 
@@ -167,5 +171,6 @@ function initMap() {
 }
 window.onload = function(){
 // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+
   initMap();
 };

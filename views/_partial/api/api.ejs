@@ -10,12 +10,28 @@
         width: 100%;
     }
 </style>
-
 <div id="map">
 <!-- Ici s'affichera la carte -->
 </div>
-
 <!-- Fichiers Javascript -->
+
+<script type="text/javascript">
+  let tabGPS = [];
+  <% if (locals.user.gps) {%>
+    <%  for (const gps of locals.user.gps) {%>
+      var gps = new Object();
+      gps.altitude = <%=gps.altitude%>;
+      gps.longitude = <%=gps.longitude%>;
+      gps.latitude = <%=gps.latitude%>;
+      console.log(gps)
+      tabGPS.push(gps);
+    <%}%>
+  <%} %>
+
+console.log(tabGPS);
+
+
+</script>
 <script src="js/leaflet.js"></script>
 <script src="js/leaflet.markercluster.js"></script>
 <script src="leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
