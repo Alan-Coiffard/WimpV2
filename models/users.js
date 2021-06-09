@@ -83,7 +83,13 @@ const signup = (request, response) => {
         }
         return foundUser
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error(err)
+        request.session.error = err
+        //request.session.message = "Connectez-vous"
+        // request.session.link = "/inscription"
+        response.redirect('/inscription')
+      })
   }
 }
 
@@ -230,9 +236,9 @@ const signin = (request, response) => {
       //console.error("coucou : ", err);
       let message = "";
       console.log(err);
-      request.session.error = "Erreur: Email/Mot de passe incorrect ! "
-      request.session.message = "Inscrivez-vous"
-      request.session.link = "/inscription"
+      request.session.error = err.message
+      // request.session.message = "Inscrivez-vous"
+      // request.session.link = "/inscription"
       response.redirect('/connexion')
       // errors.push({ message: "Erreur: Email/Mot de passe incorrect" });
       // errors.push({ redirect: "inscrivez-vous" });
@@ -252,9 +258,9 @@ const findAll = (request, response) => {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    request.session.error = errors
+    request.session.error = "Session expirée. Veuillez vous reconnecter."
     // request.session.message = "inscrivez-vous"
-    request.session.link = "/connexion"
+    // request.session.link = "/connexion"
     response.redirect('/')
     // response.render("home/connexion", { errors });
   } else {
@@ -302,9 +308,9 @@ const findHome = (request, response) => {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    request.session.error = errors
+    request.session.error = "Session expirée. Veuillez vous reconnecter."
     // request.session.message = "inscrivez-vous"
-    request.session.link = "/connexion"
+    // request.session.link = "/connexion"
     response.redirect('/')
     // response.render("home/connexion", { errors });
   } else {
@@ -382,9 +388,9 @@ const findType = (request, response) => {
     errors.push({ message: "Connectez-vous" });
   }
   if (errors.length > 0) {
-    request.session.error = errors
+    request.session.error = "Session expirée. Veuillez vous reconnecter."
     // request.session.message = "inscrivez-vous"
-    request.session.link = "/connexion"
+    // request.session.link = "/connexion"
     response.redirect('/')
     // response.render("home/connexion", { errors });
   }else {

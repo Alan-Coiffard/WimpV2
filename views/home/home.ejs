@@ -36,18 +36,7 @@
         <%}else{%>
           Vous n'avez pas encore d'animal
         <%}%>
-        <% if (locals.user.idAnimalSelect) { %>
-          <% if (locals.user.animaux) { %>
-            <% for (const animal of locals.user.animaux) { %>
-              <% if (animal.id_animal == locals.user.idAnimalSelect) { %>
-
-                <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
-                <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
-                <p>Collier de l'animal</p><p class="pInput"><% if (animal.numero_collier) {%><%= animal.numero_collier %><% } else{%>Pas de collier<%}%></p>
-              <%}%>
-            <%}%>
-          <% } %>
-        <% } %>
+        <%- include('../_partial/_options.ejs') %>
         <!-- <input type="text" name="" value="Types">
         <input type="text" name="" value="Age"> -->
       </div>
@@ -83,22 +72,9 @@
               <%}else{%>
                 Vous n'avez pas encore d'animal
               <%}%>
-              <!-- <input type="text" name="" value="Types">
-              <input type="text" name="" value="Age"> -->
-              <% if (locals.user.idSelect) { %>
-                <% if (locals.user.animaux) { %>
-                  <% for (const animal of locals.user.animaux) { %>
-                    <% if (animal.id_animal == locals.user.idSelect) { %>
-
-                      <p>Nom de l'animal</p><p class="pInput"><%= animal.nom_animal %></p>
-                      <p>Age de l'animal</p><p class="pInput"><%= animal.age_animal.years %> ans</p>
-                      <p>Collier de l'animal</p><p class="pInput"><% if (animal.numero_collier) {%><%= animal.numero_collier %><% } else{%>Pas de collier<%}%></p>
-                    <%}%>
-                  <%}%>
-                <% } %>
-              <% } %>
-
-
+              <div class="pTelephone">
+                <%- include('../_partial/_options.ejs') %>
+              </div>
             </div>
           </div>
         </div>

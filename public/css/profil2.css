@@ -342,3 +342,23 @@ label {
     }
   }
 }
+
+
+
+@media (max-width: 360px){
+  .flex {
+      height: 80vh;
+      margin: 0;
+      display: flex;
+      justify-content: space-around;
+  }
+  .img-profil {
+    display: none;
+  }
+  html, body {
+    font-size: 12px;
+  }
+  .entete {
+    height: 40%;
+  }
+}

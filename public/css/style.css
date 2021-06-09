@@ -43,8 +43,10 @@ html, body {
   margin: 0;
   height: 100vh;
   font-family: 'Droid Serif', Helvetica, Arial, sans-serif;
-
+  font-size: 15px;
 }
+
+
 
 p {
   font-family: 'Droid sans', Helvetica, Arial, sans-serif;
@@ -220,11 +222,21 @@ li {
 
 .mentions {
   text-align: center;
-  justify-content: center;
-display: flex;
-font-size: xx-small;
-color: white;
+  /* justify-content: center; */
+  /* display: flex; */
+  font-size: xx-small;
+  /* color: white; */
+  position: fixed;
+  bottom: 5px;
+  left: auto;
+  right: auto;
+  width: 100vw;
 }
+
+.mentions a {
+  color: white;
+}
+
 
 .flex {
   height: 80vh;
@@ -293,7 +305,7 @@ element.style {
 .map-date {
   border: 3px var(--gris);
   background-color: white;
-  height: 5%;
+  /* height: 5%; */
   /* display: flex; */
   /* text-align: center; */
   /* justify-content: center; */
@@ -356,16 +368,6 @@ element.style {
       margin: 0!important;
     }
 
-    #volet a.ouvrir {
-      padding: 10px 25px;
-      background: white;
-      color: black;
-      text-decoration: none;
-      -webkit-transition: all .5s ease-in;
-      -moz-transition: all .5s ease-in;
-      transition: all .5s ease-in;
-    }
-
 		#volet {
 			position: absolute;
 			left: -270px;
@@ -385,6 +387,7 @@ element.style {
 			-ms-transform: rotate(270deg);
 			-moz-radius: 0 0 8px 8px;
 			border-radius: 0 0 8px 8px;
+      border: black 1px solid;
 		}
 		#volet a.fermer {
 			display: none;
@@ -403,14 +406,28 @@ element.style {
 			display: none;
 		}
 		#volet_clos:target #volet {
-			left: -270px;
+			/* left: -270px; */
+      left: -270px;
 		}
 
+    #volet a.ouvrir {
+      padding: 5px 25px;
+      background: white;
+      color: black;
+      text-decoration: none;
+      -webkit-transition: all .5s ease-in;
+      -moz-transition: all .5s ease-in;
+      transition: all .5s ease-in;
+      /* right: -75px; */
+      right: -60px;
+      top: 70px;
+    }
 .menuTelephone {
   display: none;
 }
 .img-profil {
    width:50px;
+   height: 50px;
    border-radius:50%;
    cursor: pointer;
    margin-right: 10px;
@@ -1029,6 +1046,101 @@ html, body {
   }
   .phone {
     display: block;
+  }
+}
+
+@media (max-height: 360px){
+  html, body {
+    font-size: 12px;
+  }
+  nav#menu {
+    text-align: center;
+    padding: 0.2rem 0;
+    font-family: Lato;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 3rem;
+    font-weight: 400;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    line-height: 50px;
+    height: 50px;
+    background-color: white;
+    border-bottom: 1px black solid;
+  }
+  .centre {
+    line-height: 50px;
+  }
+  .logo, .logo-r {
+    position: fixed;
+    width: 60px;
+  }
+  .flex {
+    height: 70vh;
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .options-api {
+      border: 3px var(--gris);
+      background-color: white;
+      height: 90%;
+      display: flex;
+      text-align: center;
+      flex-direction: row;
+      color: black;
+      /* justify-content: center; */
+      /* line-height: 25; */
+      padding: 10px;
+  }
+  #volet {
+    width: 450px;
+    /* height: 500px; */
+    padding: 10px;
+    background: #6B9A49;
+    color: #fff;
+  }
+  #volet {
+    position: absolute;
+    left: -470px;
+    /* top: 55px; */
+    -webkit-transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+  }
+  #volet_clos:target #volet {
+    /* left: -270px; */
+    left: -470px;
+  }
+  .pTelephone {
+
+  }
+  .options2 {
+    display: flex;
+    justify-content: center;
+  }
+  #volet a.ouvrir, #volet a.fermer {
+      position: absolute;
+      right: -55px;
+      top: 31px;
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      -moz-radius: 0 0 8px 8px;
+      border-radius: 0 0 8px 8px;
+      border: black 1px solid;
+  }
+  #volet a.fermer {
+    right: -67px;
+  }
+  .options-profil, .options-profil a {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
   }
 }
 
