@@ -5,7 +5,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 require("dotenv").config();
 
-const fs = require('./models/fonctions.js');
+//const fs = require('./models/fonctions.js');
 
 
 const path = require('path');

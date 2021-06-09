@@ -1,4 +1,4 @@
-const fs = require('./fonctions.js');
+// const user = require('./models/fonctions');
 
 // On initialise la latitude et la longitude de l'habitation du client (centre de la carte)
 // Au préalable séléctionné/donné par l'utilisateur, dans le cas contraire:
@@ -8,17 +8,51 @@ var lat_home = 48.73056610085155;
 var lon_home = -3.460834918664013;
 var macarte = null;
 var markerClusters; // Servira à stocker les groupes de marqueurs
-global.zoom = 12; // Etablit la profondeur du zoom sur lequel la map se charge
-
+//global.zoom = 12; // Etablit la profondeur du zoom sur lequel la map se charge
+var zoom = 12;
 // Nous initialisons un tableau city qui contiendra les "ville"
 //list = nombre d'enregistrement fait par le GPS, sur la BDD, encore accessible
 var list = 0;
 let city = new Array(list);
 
+function initPoint(city) {
+  for (let point = 0; point < 10; point++){
+
+    // Pour la France et ses alentours:
+    //Lat = initCoord(42, 51);
+    //Lon = initCoord(-4, 8);
+
+    // Pour la Bretagne et ses alentours:
+    // Lat = initCoord(47.97, 48.5);
+    // Lon = initCoord(-4, -1);
+    // Alt = initCoord(-4, 20);
+
+    // Pour Lannion et ses alentours:
+    Lat = initCoord(48.7861, 48.7041);
+    Lon = initCoord(-3.5499, -3.3877);
+    Alt = initCoord(-4, 20);
+
+    // Pour la vallé du Stanco et ses alentours:
+    // Lat = initCoord(48.73565081538279, 48.73746224718652);//48.73746224718652, -3.450671274438872
+    // Lon = initCoord(-3.4550969193093337, -3.450671274438872);
+    // Alt = initCoord(-4, 20);
+
+    var ville = new Object();
+    ville.id = point;
+    ville.lat = Lat;
+    ville.lon = Lon;
+    ville.alt = Alt;
+    city.push(ville);
+    if (ville.id > 0) {
+      trie(ville);
+    }
+  }
+}
+
 // Fonction d'initialisation de la carte
 function initMap() {
 
-   fs.initPoint(city);
+   initPoint(city);
    // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
    macarte = L.map('map').setView([lat_home, lon_home], zoom);
    markerClusters = L.markerClusterGroup(); // Nous initialisons les groupes de marqueurs
@@ -45,7 +79,7 @@ function initMap() {
   console.log('home.radius: ', home._mRadius);
   console.log('xxxxxxxxxxx: ', zoom);
 
-  fs.startZoom(home._mRadius, zoom);
+  startZoom(home._mRadius, zoom);
 
 
   //Création du boutton "afficher Menu"
@@ -106,7 +140,7 @@ function initMap() {
       });
 
       var myIcon = new L.icon({
-        iconUrl: require('/images/2pattes.png'),
+        iconUrl: '/images/2pattes.png',
         options: {
           iconSize: [50, 50],
           iconAnchor: [250, 500],
@@ -115,12 +149,12 @@ function initMap() {
       });
 
       var incon = new LeafIcon({
-          iconUrl: require('/marker-icon.png')
+          iconUrl: '/images/marker-icon.png'
           //shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png'
       });
 
       var iconDogo = new LeafIcon({
-          iconUrl: require('/images/dogo.png')
+          iconUrl: '/images/dogo.png'
           //shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png'
       });
 

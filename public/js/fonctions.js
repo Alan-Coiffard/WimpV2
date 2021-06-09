@@ -1,6 +1,6 @@
 // fonction permetant de paramêtrer le zoom de départ
-const startZoom = (r, t) => {
-  global.rayon = r;
+function startZoom(r, t){
+  var rayon = r;
   var compte = new Boolean("true");
   console.log('rayon: ', r, 'zoom: ', zoom, 'compte: ', compte);
    //Savoir si il a adéjà un compte avec le bouton "home" configurer
@@ -16,7 +16,7 @@ const startZoom = (r, t) => {
 // Si distance < à 100 mètres, faire fondre le point dans le tracé
 // Sinon afficher un point classique
 //cf: https://www.movable-type.co.uk/scripts/latlong.html
-const trie = (e) => {
+function trie(e){
   const r = 6371; // km  (mètres (e3))
   const φ1 = e.lat[0] * Math.PI/180; // φ, λ en radians
   const φ2 = e.lat[1] * Math.PI/180;
@@ -35,19 +35,19 @@ const trie = (e) => {
 
 }
 
-const routage = (x, y) => {
+function routage(x, y) {
 
 }
 
 //fonction donnant un nombre random entre un min et un max
-const initCoord = (min, max) => {
+function initCoord(min, max) {
   min = min;
   max = max;
   return Math.random() * (max - min) + min;
 }
 
 // Fonction d'initialisation de points (randoms) sur la carte
-const initPoint = (city) => {
+function initPoint(city) {
   for (let point = 0; point < 10; point++){
 
     // Pour la France et ses alentours:
@@ -89,15 +89,11 @@ const initPoint = (city) => {
 //   document.getElementById("myForm").style.display = "none";
 // }
 
-module.exports = {
-  initPoint,
-  trie,
-  routage,
-  initCoord,
-  startZoom
-};
-
-
+// exports.startZoom = startZoom;
+// exports.trie = trie;
+// exports.routage = routage;
+// exports.initCoord = initCoord;
+// exports.initPoint = initPoint;
 
 //  select() => {
 //   const text = 'SELECT * FROM animaux'
