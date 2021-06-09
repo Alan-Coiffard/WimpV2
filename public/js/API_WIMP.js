@@ -1,5 +1,3 @@
-// const user = require('./models/fonctions');
-
 // On initialise la latitude et la longitude de l'habitation du client (centre de la carte)
 // Au préalable séléctionné/donné par l'utilisateur, dans le cas contraire:
 // Se positionner sur Paris.

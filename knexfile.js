@@ -2,13 +2,13 @@
 
 module.exports = {
   development: {
-    client: process.env.DB_CLIENT_D,
+    client: "pg",
     connection: {
-      host: process.env.DB_HOST_D,
-      port: process.env.DB_PORT_D,
-      user: process.env.DB_USER_D,
-      password: process.env.DB_PASSWORD_D,
-      database: process.env.DB_DATABASE_D
+      host: "192.168.15.145",
+      port: 5432,
+      user: "postgres",
+      password: "root",
+      database: "wimp"
     },
     migrations: {
       directory: "./data/migrations",
