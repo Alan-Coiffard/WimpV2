@@ -19,7 +19,7 @@
                   <label for="">Adresse email</label>
                   <input  type="email"
                           id="email"
-                          onchange="verifInput();"
+                          onkeyup="verifInput();"
                           placeholder="Adresse mail"
                           name="email"
                           value="<% if (typeof email != 'undefined') { %><%= email %><% }%>"
@@ -30,7 +30,7 @@
                   <input  type="text"
                           placeholder="Nom"
                           name="nom"
-                          onchange="verifInput();"
+                          onkeyup="verifInput();"
                           id="nom"
                           value="<% if (typeof nom != 'undefined') { %><%= nom %><% }%>"
                           aria-describedby="basic-addon1">
@@ -40,7 +40,7 @@
                   <input  type="text"
                           placeholder="Prénom"
                           id="prenom"
-                          onchange="verifInput();"
+                          onkeyup="verifInput();"
                           name="prenom"
                           value="<% if (typeof prenom != 'undefined') { %><%= prenom %><% }%>"
                           aria-describedby="basic-addon1">
