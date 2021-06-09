@@ -2,3 +2,4 @@
 # Ignorer tous les fichiers nommés .env
 .env
 node_modules/
+knexfile.js
