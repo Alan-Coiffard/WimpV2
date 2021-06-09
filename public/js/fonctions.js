@@ -1,5 +1,5 @@
 // fonction permetant de paramêtrer le zoom de départ
-const startZoom = function(r, t){
+const startZoom = (r, t) => {
   global.rayon = r;
   var compte = new Boolean("true");
   console.log('rayon: ', r, 'zoom: ', zoom, 'compte: ', compte);
@@ -16,7 +16,7 @@ const startZoom = function(r, t){
 // Si distance < à 100 mètres, faire fondre le point dans le tracé
 // Sinon afficher un point classique
 //cf: https://www.movable-type.co.uk/scripts/latlong.html
-const trie = function(e){
+const trie = (e) => {
   const r = 6371; // km  (mètres (e3))
   const φ1 = e.lat[0] * Math.PI/180; // φ, λ en radians
   const φ2 = e.lat[1] * Math.PI/180;
@@ -35,19 +35,19 @@ const trie = function(e){
 
 }
 
-const routage = function(x, y){
+const routage = (x, y) => {
 
 }
 
 //fonction donnant un nombre random entre un min et un max
-const initCoord = function(min, max){
+const initCoord = (min, max) => {
   min = min;
   max = max;
   return Math.random() * (max - min) + min;
 }
 
 // Fonction d'initialisation de points (randoms) sur la carte
-const initPoint = function(city){
+const initPoint = (city) => {
   for (let point = 0; point < 10; point++){
 
     // Pour la France et ses alentours:
@@ -81,13 +81,13 @@ const initPoint = function(city){
   }
 }
 
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
+//  openForm() {
+//   document.getElementById("myForm").style.display = "block";
+// }
+//
+//  closeForm() {
+//   document.getElementById("myForm").style.display = "none";
+// }
 
 module.exports = {
   initPoint,
@@ -99,7 +99,7 @@ module.exports = {
 
 
 
-// function select(){
+//  select() => {
 //   const text = 'SELECT * FROM animaux'
 //   // callback
 //   pool.query(text, (err, res) => {
@@ -112,7 +112,7 @@ module.exports = {
 //   return 0;
 // }
 
-// function SelectId(){
+//  SelectId() => {
 //   const selectElement = document.getElementById('selectAnimaux');
 //   selectElement.addEventListener('change', (event) => {
 //     alert(event.target.value);
