@@ -5,7 +5,7 @@
 var lat_home = 48.73056610085155;
 var lon_home = -3.460834918664013;
 var macarte = null;
-var markerClusters; // Servira à stocker les groupes de marqueurs
+
 //global.zoom = 12; // Etablit la profondeur du zoom sur lequel la map se charge
 var zoom = 12;
 // Nous initialisons un tableau city qui contiendra les "ville"
@@ -100,40 +100,35 @@ function initMap() {
     var polyline = L.polyline(latlngs, {color: '#C50022'}).addTo(macarte);
 
   //Création du tracé GPS qui suit les routes
-  //   L.Routing.control({
-  //     waypoints:[
-  //       //L.latLng(48.56036426785153, -3.1599197957359926),
-  //       L.latLng(city[i].lat, city[i].lon),
-  //       //L.latLng(48.51278434587372, -2.779401099923159)],
-  //       L.latLng(city[i+1].lat, city[i+1].lon)],
-  //        router: new L.Routing.OSRMv1({
-  //          profile: 'route/v1/driving',         // /!\ IMPORTANT /!\ : Suffixe de serviceUrl
-  //          serviceUrl: 'http://192.168.15.87:5000'  // Permet  http://localhost:5000
-  //        }),
-  //     // Class "animate" permet de régler (en CSS) certain détail de l'animation (vitesse d'exécution, temps avant exécution, coleur, etc...)
-  //     lineOptions: {
-  //       styles: [{className: 'animate'}]
-  //     },
-  //     draggableWaypoints: false,
-  //     addWaypoints: false
-  //   }).addTo(macarte);
+    // L.Routing.control({
+    //   waypoints:[
+    //     //L.latLng(48.56036426785153, -3.1599197957359926),
+    //     L.latLng(city[i].lat, city[i].lon),
+    //     //L.latLng(48.51278434587372, -2.779401099923159)],
+    //     L.latLng(city[i+1].lat, city[i+1].lon)],
+    //      router: new L.Routing.OSRMv1({
+    //        profile: 'route/v1/driving',         // /!\ IMPORTANT /!\ : Suffixe de serviceUrl
+    //        serviceUrl: 'http://192.168.15.87:5000'  // Permet  http://localhost:5000
+    //      }),
+    //   // Class "animate" permet de régler (en CSS) certain détail de l'animation (vitesse d'exécution, temps avant exécution, coleur, etc...)
+    //   lineOptions: {
+    //     styles: [{className: 'animate'}]
+    //   },
+    //   draggableWaypoints: false,
+    //   addWaypoints: false
+    // }).addTo(macarte);
   }
 
    //test pour ajout dans tableau city
    for (ville in city) {
-     // Nous définissons l'icône à utiliser pour le marqueur, sa taille affichée (iconSize), sa position (iconAnchor) et le décalage de son ancrage (popupAnchor)
-     var myIcon = new L.icon({
-       iconSize: [100, 100],
-       iconAnchor: [25, 100],
-       popupAnchor: [-3, -76],
-     });
-     console.log(city[ville].lat);
-     console.log(city[ville].lon);
-     console.log(city[ville].alt);
+      // console.log(city[ville].lat);
+      // console.log(city[ville].lon);
+      // console.log(city[ville].alt);
 
+     // Nous définissons la classe d'icône, à utiliser pour les marqueurs, leur taille affichée (iconSize), leur position (iconAnchor) et le décalage de leur ancrage (popupAnchor)
      var LeafIcon = L.Icon.extend({
           options: {
-             // iconSize:     [25, 50],
+             //iconSize:     [25, 50],
              shadowSize:   [50, 64],
              iconAnchor:   [12, 40],
              shadowAnchor: [4, 62],
@@ -141,29 +136,52 @@ function initMap() {
           }
       });
 
-      var myIcon = new L.icon({
-        iconUrl: '/images/2pattes.png',
-        options: {
-          iconSize: [50, 50],
-          iconAnchor: [250, 500],
-          popupAnchor: [-3, -76],
-        }
-      });
+      var LeafIconMin = L.Icon.extend({
+           options: {
+              iconSize:     [50, 64],
+              popupAnchor:  [-2, -3]
+            }
+       });
 
       var incon = new LeafIcon({
-          iconUrl: '/images/marker-icon.png'
-          //shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png'
+          iconUrl: '/images/marker-icon.png'        // Icone bleu
+      });
+      var incon_Min = new LeafIconMin({
+          iconUrl: '/images/marker-icon-invisible.png'        // Icone bleu invisible
+      });
+      var dicon = new LeafIcon({
+          iconUrl: '/images/marker-icon-début.png'  // Icone vert du début
+      });
+      var ficon = new LeafIcon({
+          iconUrl: '/images/marker-icon-fin.png'    // Icone rouge de fin
       });
 
-      var iconDogo = new LeafIcon({
-          iconUrl: '/images/dogo.png'
-          //shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png'
-      });
+      //   Début   \\
+      if (ville == 0) {
+        var d_marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: dicon}).addTo(macarte);//.bindPopup(`<b> ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+        // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
+        d_marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+      }
+      //   Fin   \\
+      if (ville == tabGPS.length-1) {
+        var f_marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: ficon}).addTo(macarte);
+        f_marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+      }
+      //   Centre   \\
+      if (ville != 0 && ville != tabGPS.length-1) {
+        if (true) {
+          var marker_Min = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: incon_Min}).addTo(macarte);
+          marker_Min.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+        } else {
+          var marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: incon}).addTo(macarte);
+          marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+        }
+      }
 
+      console.log("ville :", ville);
+      console.log("tabGPS.length-1 :", tabGPS.length-1);
+      console.log("tabGPS.length :", tabGPS.length);
 
-     var marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: incon}).addTo(macarte);//.bindPopup(`<b> ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
-     // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
-     marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
   }
    macarte.addLayer(markerClusters);
    // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
