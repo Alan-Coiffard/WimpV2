@@ -39,7 +39,6 @@ function initMap() {
        maxZoom: 20
    }).addTo(macarte);
 
-  var distance = 50;
   var home_lat = 48.732675;
   var home_lon = -3.446217
 
