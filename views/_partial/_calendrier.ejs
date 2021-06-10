@@ -12,6 +12,8 @@ $(function() {
     timePicker: true,
     startDate: moment().startOf('hour'),
     endDate: moment().startOf('hour').add(32, 'hour'),
+    minDate: moment().subtract(50, 'year'),
+    maxDate: moment(),
     locale: {
       format: formatDate
     }
