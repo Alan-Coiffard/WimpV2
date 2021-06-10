@@ -22,7 +22,11 @@
         <% if(locals.user.animaux){ %>
           <form class="selectAnimal" action="api/animal" method="post">
             <select name="listeAnimaux" id="selectAnimaux">
-              <option value="">--Choisir l'animal--</option>
+              <% if (locals.user.idAnimalSelect) { %>
+                <option value="<%= locals.user.idAnimalSelect %>"><%= locals.user.idAnimalSelect %></option>
+              <%}else{%>
+                <option value="">--Choisir l'animal--</option>
+              <%}%>
               <% for (const animal of locals.user.animaux) { %>
                   <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
               <%}%>
@@ -57,7 +61,11 @@
               <% if(locals.user.animaux){ %>
                 <form class="selectAnimal" action="api/animal" method="post">
                   <select name="listeAnimaux" id="selectAnimaux2">
-                    <option value="">--Choisir l'animal--</option>
+                    <% if (locals.user.idAnimalSelect) { %>
+                      <option value="<%= locals.user.idAnimalSelect %>"><%= locals.user.idAnimalSelect %></option>
+                    <%}else{%>
+                      <option value="">--Choisir l'animal--</option>
+                    <%}%>
                     <% for (const animal of locals.user.animaux) { %>
                         <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
                     <%}%>

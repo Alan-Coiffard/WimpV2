@@ -16,9 +16,10 @@ const afficherAnimal = (request, response) => {
   .then(foundGPS => {
     request.session.gps = foundGPS;
     response.redirect('/home');
-  })
+  });
 
 }
+
 
 const findGPS = (idAnimal, dateDebut, dateFin) => {
   return database.raw("SELECT * FROM gps WHERE id_Animal = ? AND date BETWEEN ? AND ?", [idAnimal, dateDebut, dateFin])
