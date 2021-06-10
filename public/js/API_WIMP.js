@@ -39,6 +39,12 @@ function initMap() {
        maxZoom: 20
    }).addTo(macarte);
 
+   if(animalDistance){
+     console.log("Distance : ", animalDistance);
+     var distance = animalDistance;
+   } else {
+     var distance = 0;
+   }
   var home_lat = 48.732675;
   var home_lon = -3.446217
 
