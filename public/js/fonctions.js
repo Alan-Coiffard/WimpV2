@@ -16,7 +16,7 @@ function startZoom(r, t){
 // Si distance < à 100 mètres, faire fondre le point dans le tracé
 // Sinon afficher un point classique
 //cf: https://www.movable-type.co.uk/scripts/latlong.html
-function trie(e){
+function distance(e){
   const r = 6371; // km  (mètres (e3))
   const φ1 = e.lat[0] * Math.PI/180; // φ, λ en radians
   const φ2 = e.lat[1] * Math.PI/180;

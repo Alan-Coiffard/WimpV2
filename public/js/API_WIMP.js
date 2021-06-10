@@ -15,40 +15,13 @@ let city = new Array(list);
 
 function initPoint(city) {
   for (let point = 0; point < tabGPS.length; point++){
-    // Pour la France et ses alentours:
-    // Lat = initCoord(42, 51);
-    // Lon = initCoord(-4, 8);
-    //
-    // Pour la Bretagne et ses alentours:
-    // Lat = initCoord(47.97, 48.5);
-    // Lon = initCoord(-4, -1);
-    // Alt = initCoord(-4, 20);
-    //
-    // // Pour Lannion et ses alentours:
-    // Lat = initCoord(48.7861, 48.7041);
-    // Lon = initCoord(-3.5499, -3.3877);
-    // Alt = initCoord(-4, 20);
-    //
-    // Pour la vallé du Stanco et ses alentours:
-    // Lat = initCoord(48.73565081538279, 48.73746224718652);//48.73746224718652, -3.450671274438872
-    // Lon = initCoord(-3.4550969193093337, -3.450671274438872);
-    // Alt = initCoord(-4, 20);
-
-
     var ville = new Object();
     ville.id = point;
     ville.lat = tabGPS[point].latitude;
     ville.lon = tabGPS[point].longitude;
     ville.alt = tabGPS[point].altitude;
     city.push(ville);
-
   }
-
-
-
-  // if (ville.id > 0) {
-  //   trie(ville);
-  // }
 }
 
 // Fonction d'initialisation de la carte
@@ -65,19 +38,35 @@ function initMap() {
        minZoom: 1,
        maxZoom: 20
    }).addTo(macarte);
-//
-//            map.on('click', function(e) {
-//     alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
-// });
 
-   //Création du périmêtre de la maison, autour du quel, la position du chien n'est pas pris en compte
-   var home = L.circle([48.732675, -3.446217], {
-     color: 'red',
-     fillColor: '#f03',
-     fillOpacity: 0.5,
-     //Radius = Rayon "Maison"
-     radius: 500
-  }).addTo(macarte);
+  var distance = 50;
+  var home_lat = 48.732675;
+  var home_lon = -3.446217
+
+  var LeafIconHome = L.Icon.extend({
+       options: {
+          iconSize:     [50, 64],
+          popupAnchor:  [-2, -3]
+        }
+   });
+
+   var icon_home = new LeafIconHome({
+       iconUrl: '/images/home.png'        // Icone "home"
+   });
+
+  if (distance != null) {
+    //Création du périmêtre de la maison, autour du quel, la position du chien n'est pas pris en compte
+    var home = L.circle([home_lat, home_lon], {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+      //Radius = Rayon "Maison"
+      radius: distance
+   }).addTo(macarte);
+  } else {
+    var d_marker = new L.marker([home_lat, home_lon], {icon: icon_home}).addTo(macarte);
+  }
+
   console.log('home.radius: ', home._mRadius);
   console.log('xxxxxxxxxxx: ', zoom);
 
@@ -178,9 +167,9 @@ function initMap() {
         }
       }
 
-      console.log("ville :", ville);
-      console.log("tabGPS.length-1 :", tabGPS.length-1);
-      console.log("tabGPS.length :", tabGPS.length);
+      // console.log("ville :", ville);
+      // console.log("tabGPS.length-1 :", tabGPS.length-1);
+      // console.log("tabGPS.length :", tabGPS.length);
 
   }
    macarte.addLayer(markerClusters);
