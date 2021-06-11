@@ -26,16 +26,18 @@
         <% } else { %>
           ø
       <% } %></p>
-      <button id="modifier-<%= animal.id_animal %>" type="button" class="btn btn-modifier" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
+      <button id="modifier-<%= animal.id_animal %>" type="button" class="btn btn-modifier modifier" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
         <img src="https://img.icons8.com/metro/15/000000/edit.png"/>
       </button>
       <!-- <form action="/supprimerAnimal" method="post" class="btn btn-supprimer">
         <input type="hidden" name="id_animal" value="">
         <input type="image" class="btn btn-supprimer" value="" src="https://img.icons8.com/android/15/000000/trash.png"/>
       </form> -->
-      <button id="supprimer-<%= animal.id_animal %>" type="button" class="btn btn-modifier" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
+      <button id="supprimer-<%= animal.id_animal %>" type="button" class="btn btn-modifier supprimer" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
         <img src="https://img.icons8.com/android/15/000000/trash.png"/>
       </button>
+      <img class="btn btn-modifier plus" src="https://img.icons8.com/android/15/000000/sort-right.png"/>
+
     </div>
     <script>
 

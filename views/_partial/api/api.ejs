@@ -15,14 +15,16 @@
 </div>
 <!-- Fichiers Javascript -->
 <%
-  for (const animal of locals.user.animaux) {
-    if (animal.id_animal == locals.user.idAnimalSelect) {%>
-      <script type="text/javascript">
-        var animalDistance = <%= animal.distance %>
-        console.log("Distance : ", animalDistance);
-        //document.cookie = "animalDistance="+animalDistance;
-      </script>
-    <%}
+  if (locals.user.animaux) {
+    for (const animal of locals.user.animaux) {
+      if (animal.id_animal == locals.user.idAnimalSelect) {%>
+        <script type="text/javascript">
+          var animalDistance = <%= animal.distance %>
+          console.log("Distance : ", animalDistance);
+          //document.cookie = "animalDistance="+animalDistance;
+        </script>
+      <%}
+    }
   }
 %>
 <script type="text/javascript">
