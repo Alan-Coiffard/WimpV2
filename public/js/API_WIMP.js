@@ -39,38 +39,35 @@ function initMap() {
        maxZoom: 20
    }).addTo(macarte);
 
+   var home_lat = 48.732675;
+   var home_lon = -3.446217;
+
+   var LeafIconHome = L.Icon.extend({
+        options: {
+           iconSize:     [50, 64],
+           popupAnchor:  [-2, -3]
+         }
+    });
+
+    var icon_home = new LeafIconHome({
+        iconUrl: '/images/home.png'        // Icone "home"
+    });
+
    if(animalDistance){
      console.log("Distance : ", animalDistance);
      var distance = animalDistance;
+     //Création du périmêtre de la maison, autour du quel, la position du chien n'est pas pris en compte
+     var home = L.circle([home_lat, home_lon], {
+       color: 'red',
+       fillColor: '#f03',
+       fillOpacity: 0.5,
+       //Radius = Rayon "Maison"
+       radius: distance
+    }).addTo(macarte);
    } else {
      var distance = 0;
-   }
-  var home_lat = 48.732675;
-  var home_lon = -3.446217
-
-  var LeafIconHome = L.Icon.extend({
-       options: {
-          iconSize:     [50, 64],
-          popupAnchor:  [-2, -3]
-        }
-   });
-
-   var icon_home = new LeafIconHome({
-       iconUrl: '/images/home.png'        // Icone "home"
-   });
-
-  if (distance != null) {
-    //Création du périmêtre de la maison, autour du quel, la position du chien n'est pas pris en compte
-    var home = L.circle([home_lat, home_lon], {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-      //Radius = Rayon "Maison"
-      radius: distance
-   }).addTo(macarte);
-  } else {
-    var d_marker = new L.marker([home_lat, home_lon], {icon: icon_home}).addTo(macarte);
-  }
+     var d_marker = new L.marker([home_lat, home_lon], {icon: icon_home}).addTo(macarte);
+   };
 
   console.log('home.radius: ', home._mRadius);
   console.log('xxxxxxxxxxx: ', zoom);
