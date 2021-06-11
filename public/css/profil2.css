@@ -343,9 +343,23 @@ label {
   }
 }
 
+@media (max-height: 650px) {
+  .flex {
+    justify-content: center;
+    height: 78vh;
+  }
+  .img-profil {
+    display: none;
+  }
+  html, body {
+    font-size: 12px;
+  }
+  .entete {
+    height: 40%;
+  }
+}
 
-
-@media (max-width: 360px){
+@media (max-width: 500px){
   .flex {
       height: 80vh;
       margin: 0;
@@ -366,7 +380,7 @@ label {
 @media (max-width: 500px){
   .wrapper {
     display: grid;
-    grid-template-columns: repeat(5, 1fr) 50px;
+    grid-template-columns: repeat(5, 1fr) 20px 20px;
     /*grid-auto-rows: 100px;*/
   }
   .wrapper2 {
@@ -374,7 +388,16 @@ label {
     grid-template-columns: 50px 1fr 50px;
     /*grid-auto-rows: 100px;*/
   }
-  .supprimer, .modifier {
+  .btn-modifier {
+    min-width: unset;
+    max-width: unset;
+  }
+
+}
+
+@media (min-width: 500px){
+
+  .plus {
     display: none;
   }
 

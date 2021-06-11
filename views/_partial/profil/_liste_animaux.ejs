@@ -1,5 +1,5 @@
 <h2>Liste des animaux</h2>
-<% //console.log("User : ",locals.user); %>
+<% //console.log("User : ",locals.user.animaux[0]); %>
 <% if(locals.user.animaux[0]){ %>
 <div class="tab-overflow">
   <div class="wrapper wrapper-entete">
@@ -10,10 +10,7 @@
     <p>Collier</p>
   </div>
   <div class="wrapper wrapper-body">
-    <%= //console.log(locals.user.animaux); %>
     <% for (const animal of locals.user.animaux) { %>
-      <%= //console.log(animal.id_animal); %>
-
     <div>
       <p><%= animal.nom_animal %></p>
       <p><%= animal.type_animal %></p>
@@ -29,16 +26,14 @@
       <button id="modifier-<%= animal.id_animal %>" type="button" class="btn btn-modifier modifier" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
         <img src="https://img.icons8.com/metro/15/000000/edit.png"/>
       </button>
-      <!-- <form action="/supprimerAnimal" method="post" class="btn btn-supprimer">
-        <input type="hidden" name="id_animal" value="">
-        <input type="image" class="btn btn-supprimer" value="" src="https://img.icons8.com/android/15/000000/trash.png"/>
-      </form> -->
       <button id="supprimer-<%= animal.id_animal %>" type="button" class="btn btn-modifier supprimer" value="<%= animal.id_animal %>" name="<%= animal.nom_animal %>">
         <img src="https://img.icons8.com/android/15/000000/trash.png"/>
       </button>
-      <img class="btn btn-modifier plus" src="https://img.icons8.com/android/15/000000/sort-right.png"/>
+
+
 
     </div>
+
     <script>
 
     	// Display a confirm alert

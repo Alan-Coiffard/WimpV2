@@ -311,7 +311,7 @@ element.style {
   /* justify-content: center; */
   /* line-height: 25; */
   /* margin-bottom: 5px; */
-  width: 50%;
+  width: 100%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -508,7 +508,7 @@ element.style {
 
 /*Popper*/
 
-#popper-popup {
+.popper-popup {
   display: none;
   transition: all 1s ease-out;
   background: #333;
@@ -521,7 +521,7 @@ element.style {
   width: 100%;
   max-width: 400px;
 }
-#popper-popup a {
+.popper-popup a {
   font-size: 16px;
   transition: all 1s ease-out;
   font-weight: 300;
@@ -533,16 +533,16 @@ element.style {
   text-transform: uppercase;
   transition: all 1s ease-out;
 }
-#popper-popup a:hover {
+.popper-popup a:hover {
   background: #444444;
   transition: all 1s ease-out;
 }
-#popper-popup[data-popper-reference-hidden] {
+.popper-popup[data-popper-reference-hidden] {
   visibility: hidden;
   pointer-events: none;
   transition: all 1s ease-out;
 }
-#popper-popup[show-popper] {
+.popper-popup[show-popper] {
   display: block;
   z-index: 9999;
   transition: all 1s ease-out;
@@ -555,19 +555,19 @@ element.style {
 }
 
 /*build the arrow targeting the divider with class 'popper-arrow'*/
-#popper-arrow,
-#popper-arrow::before {
+.popper-arrow,
+.popper-arrow::before {
   transition: all 1s ease-out;
   position: absolute;
   width: 8px;
   height: 8px;
   background: #333333;
 }
-#popper-arrow {
+.popper-arrow {
   visibility: hidden;
   transition: all 1s ease-out;
 }
-#popper-arrow::before {
+.popper-arrow::before {
   visibility: visible;
   content: "";
   transform: rotate(45deg);
@@ -588,8 +588,8 @@ element.style {
     transition: all 1s ease-out;
     left: auto;
     position: absolute;
-    bottom: -25px;
-    right: auto;
+    /* bottom: -25px; */
+    right: 10px;
     top: unset;
   }
 }

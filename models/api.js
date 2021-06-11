@@ -17,7 +17,6 @@ const afficherAnimal = (request, response) => {
     request.session.gps = foundGPS;
     response.redirect('/home');
   });
-
 }
 
 

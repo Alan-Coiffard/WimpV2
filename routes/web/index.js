@@ -24,6 +24,7 @@ router.use(function(req, res, next){
     res.locals.link = req.session.link
     req.session.link = undefined
   }
+  console.log(req.session);
   res.locals.user = req.session;
   next();
 });

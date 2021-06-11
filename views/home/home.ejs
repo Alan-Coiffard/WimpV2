@@ -19,16 +19,22 @@
         <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
       </div>
       <div class="options-api">
-        <% if(locals.user.animaux){ %>
+        <% if(locals.user.animaux != 0){ %>
           <form class="selectAnimal" action="api/animal" method="post">
             <select name="listeAnimaux" id="selectAnimaux">
               <% if (locals.user.idAnimalSelect) { %>
-                <option value="<%= locals.user.idAnimalSelect %>"><%= locals.user.idAnimalSelect %></option>
+                <% for (const animal of locals.user.animaux) { %>
+                  <% if (locals.user.idAnimalSelect == animal.id_animal) {%>
+                    <option value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                  <%}%>
+                <%}%>
               <%}else{%>
                 <option value="">--Choisir l'animal--</option>
               <%}%>
               <% for (const animal of locals.user.animaux) { %>
-                  <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                <% if (animal.id_animal != locals.user.idAnimalSelect) {%>
+                  <option value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                <%}%>
               <%}%>
             </select>
             <input type="submit" id="submit1" class="" value="Selectionner" style="
@@ -58,16 +64,22 @@
               <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
             </div>
             <div class="options-api">
-              <% if(locals.user.animaux){ %>
+              <% if(locals.user.animaux != 0){ %>
                 <form class="selectAnimal" action="api/animal" method="post">
-                  <select name="listeAnimaux" id="selectAnimaux2">
+                  <select name="listeAnimaux" id="selectAnimaux">
                     <% if (locals.user.idAnimalSelect) { %>
-                      <option value="<%= locals.user.idAnimalSelect %>"><%= locals.user.idAnimalSelect %></option>
+                      <% for (const animal of locals.user.animaux) { %>
+                        <% if (locals.user.idAnimalSelect == animal.id_animal) {%>
+                          <option value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                        <%}%>
+                      <%}%>
                     <%}else{%>
                       <option value="">--Choisir l'animal--</option>
                     <%}%>
                     <% for (const animal of locals.user.animaux) { %>
-                        <option name="type" value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                      <% if (animal.id_animal != locals.user.idAnimalSelect) {%>
+                        <option value="<%= animal.id_animal %>"><%= animal.nom_animal %></option>
+                      <%}%>
                     <%}%>
                   </select>
                   <input type="submit" id="submit2" class="" value="Selectionner" style="
