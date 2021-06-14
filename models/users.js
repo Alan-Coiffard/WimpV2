@@ -273,30 +273,29 @@ const findAll = (request, response) => {
         //console.log("Colliers: ", colliers);
         console.log("---------------------------------------------------------------------animaux");
         request.session.animaux = animaux;
-        //response.redirect('./profil');
-        //response.status(200).json(user);
-      })
-      .catch((err) => console.error(err))
-    _findCollier(request.session.id_client)
-      .then(foundCollier => {
-        colliers = foundCollier.rows
-        return colliers
-      })
-      .then(() => {
-        //console.log("Colliers: ", colliers);
-        console.log("---------------------------------------------------------------------colliers");
-        request.session.colliers = colliers;
+        _findCollier(request.session.id_client)
+          .then(foundCollier => {
+            colliers = foundCollier.rows
+            return colliers
+          })
+          .then(() => {
+            //console.log("Colliers: ", colliers);
+            console.log("---------------------------------------------------------------------colliers");
+            request.session.colliers = colliers;
 
-        request.session.error = response.locals.error
-        request.session.message = response.locals.message
-        request.session.link = response.locals.link
-        request.session.validate = response.locals.validate
-        // request.session.message = "inscrivez-vous"
-        // request.session.link = "/inscription"
-        response.redirect('/profil')
-        //response.status(200).json(user);
+            request.session.error = response.locals.error
+            request.session.message = response.locals.message
+            request.session.link = response.locals.link
+            request.session.validate = response.locals.validate
+            // request.session.message = "inscrivez-vous"
+            // request.session.link = "/inscription"
+            response.redirect('/profil')
+            //response.status(200).json(user);
+          })
+          .catch((err) => console.error(err))
       })
       .catch((err) => console.error(err))
+
   }
 }
 
@@ -323,32 +322,28 @@ const findHome = (request, response) => {
         //console.log("Colliers: ", colliers);
         console.log("---------------------------------------------------------------------animaux");
         request.session.animaux = animaux;
-        //response.redirect('./profil');
-        //response.status(200).json(user);
-      })
-      .catch((err) => console.error(err))
+        _findCollier(request.session.id_client)
+          .then(foundCollier => {
+            colliers = foundCollier.rows
+            return colliers
+          })
+          .then(() => {
+            //console.log("Colliers: ", colliers);
+            console.log("---------------------------------------------------------------------colliers");
+            request.session.colliers = colliers;
 
+            console.log(response.locals.validate);
 
-    _findCollier(request.session.id_client)
-      .then(foundCollier => {
-        colliers = foundCollier.rows
-        return colliers
-      })
-      .then(() => {
-        //console.log("Colliers: ", colliers);
-        console.log("---------------------------------------------------------------------colliers");
-        request.session.colliers = colliers;
-
-        console.log(response.locals.validate);
-
-        request.session.error = response.locals.error
-        request.session.message = response.locals.message
-        request.session.link = response.locals.link
-        request.session.validate = response.locals.validate
-        // request.session.message = "inscrivez-vous"
-        // request.session.link = "/inscription"
-        response.redirect('/home')
-        //response.status(200).json(user);
+            request.session.error = response.locals.error
+            request.session.message = response.locals.message
+            request.session.link = response.locals.link
+            request.session.validate = response.locals.validate
+            // request.session.message = "inscrivez-vous"
+            // request.session.link = "/inscription"
+            response.redirect('/home')
+            //response.status(200).json(user);
+          })
+          .catch((err) => console.error(err))
       })
       .catch((err) => console.error(err))
   }
@@ -359,7 +354,9 @@ const _findAnimal = (id_client) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  return request
+  .then(() => {
+    return request
+  }
 }
 
 const _findCollier = (id_client) => {
@@ -367,7 +364,9 @@ const _findCollier = (id_client) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  return request
+  .then(() => {
+    return request
+  }
 }
 
 // const _findAnimal = (id_client) => {
@@ -492,7 +491,9 @@ const findAnimalById = (id_animal) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  return request
+  .then(() => {
+    return request
+  }
 }
 
 const supprimerAnimal = (request, response) => {
