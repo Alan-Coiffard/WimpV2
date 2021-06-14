@@ -350,23 +350,19 @@ const findHome = (request, response) => {
 }
 
 const _findAnimal = (id_client) => {
-  let request = database.raw("SELECT colliers.id_collier, colliers.numero_collier, colliers.id_client, id_animal_collier, animaux.id_animal, nom_animal, naissance_animal, type_animal, distance, animaux.id_collier, id_utilisateur, AGE(naissance_animal) AS age_animal FROM animaux left join colliers on colliers.id_collier = animaux.id_collier WHERE id_utilisateur = ?", [id_client], (err, res) => {
+  return database.raw("SELECT colliers.id_collier, colliers.numero_collier, colliers.id_client, id_animal_collier, animaux.id_animal, nom_animal, naissance_animal, type_animal, distance, animaux.id_collier, id_utilisateur, AGE(naissance_animal) AS age_animal FROM animaux left join colliers on colliers.id_collier = animaux.id_collier WHERE id_utilisateur = ?", [id_client], (err, res) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  .then(() => {
-    return request
-  }
+
 }
 
 const _findCollier = (id_client) => {
-  let request = database.raw("SELECT * FROM colliers WHERE id_client = ?", [id_client], (err, res) => {
+  return database.raw("SELECT * FROM colliers WHERE id_client = ?", [id_client], (err, res) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  .then(() => {
-    return request
-  }
+
 }
 
 // const _findAnimal = (id_client) => {
@@ -410,8 +406,8 @@ const findType = (request, response) => {
 
 const _findType = (id_client)  => {
   //console.log(id_client);
-  let request = database.raw("SELECT * FROM types")
-  return request
+  return database.raw("SELECT * FROM types")
+  
 }
 
 
@@ -487,13 +483,11 @@ const createAnimal = (animal, id_client) => {
 
 
 const findAnimalById = (id_animal) => {
-  let request = database.raw("SELECT colliers.id_collier, colliers.numero_collier, colliers.id_client, id_animal_collier, animaux.id_animal, nom_animal, naissance_animal, type_animal, distance, animaux.id_collier, id_utilisateur, AGE(naissance_animal) AS age_animal FROM animaux left join colliers on colliers.id_collier = animaux.id_collier WHERE id_animal = ?", [id_animal], (err, res) => {
+  return database.raw("SELECT colliers.id_collier, colliers.numero_collier, colliers.id_client, id_animal_collier, animaux.id_animal, nom_animal, naissance_animal, type_animal, distance, animaux.id_collier, id_utilisateur, AGE(naissance_animal) AS age_animal FROM animaux left join colliers on colliers.id_collier = animaux.id_collier WHERE id_animal = ?", [id_animal], (err, res) => {
     //console.log(err ? err.stack : "test ",res.rows[0]) // Hello World!
     database.end()
   })
-  .then(() => {
-    return request
-  }
+
 }
 
 const supprimerAnimal = (request, response) => {
