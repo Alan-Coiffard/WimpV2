@@ -19,7 +19,7 @@
         <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
       </div>
       <div class="options-api">
-        <% if(locals.user.animaux != 0){ %>
+        <% if(locals.user.animaux != 0 && locals.user.animaux){ %>
           <form class="selectAnimal" action="api/animal" method="post">
             <select name="listeAnimaux" id="selectAnimaux">
               <% if (locals.user.idAnimalSelect) { %>
@@ -64,7 +64,7 @@
               <a href="/deconnexion"><img class="img-profil" src="https://img.icons8.com/pastel-glyph/64/000000/exit--v2.png"/></a>
             </div>
             <div class="options-api">
-              <% if(locals.user.animaux != 0){ %>
+              <% if(locals.user.animaux != 0 && locals.user.animaux){ %>
                 <form class="selectAnimal" action="api/animal" method="post">
                   <select name="listeAnimaux" id="selectAnimaux">
                     <% if (locals.user.idAnimalSelect) { %>

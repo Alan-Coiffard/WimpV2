@@ -14,6 +14,7 @@ const afficherAnimal = (request, response) => {
 
   findGPS(idSelect, dateDebut, dateFin)
   .then(foundGPS => {
+    console.log(foundGPS);
     request.session.gps = foundGPS;
     response.redirect('/home');
   });
@@ -21,7 +22,8 @@ const afficherAnimal = (request, response) => {
 
 
 const findGPS = (idAnimal, dateDebut, dateFin) => {
-  return database.raw("SELECT * FROM gps WHERE id_Animal = ? AND date BETWEEN ? AND ?", [idAnimal, dateDebut, dateFin])
+  var formatDate = "%d/%m/%Y";
+  return database.raw("SELECT *, to_char(date, 'dd-mm-YYYY - HH24:MM:SS') FROM gps WHERE id_Animal = ? AND date BETWEEN ? AND ?", [idAnimal, dateDebut, dateFin])
   .then((data) => {
     return data.rows
   });

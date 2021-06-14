@@ -20,7 +20,9 @@ function initPoint(city) {
     ville.lat = tabGPS[point].latitude;
     ville.lon = tabGPS[point].longitude;
     ville.alt = tabGPS[point].altitude;
+    ville.date = tabGPS[point].date;
     city.push(ville);
+
   }
 }
 
@@ -148,23 +150,24 @@ function initMap() {
 
       //   Début   \\
       if (ville == 0) {
+        // console.log("Ville", city[ville].date, city[ville].lat);
         var d_marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: dicon}).addTo(macarte);//.bindPopup(`<b> ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
         // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
-        d_marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+        d_marker.bindPopup(`<b>Coordonnées:</b> ${ville} <br><b>Date: </b>${city[ville].date} <br><b>Lattitude: </b>${city[ville].lat} <br><b>Longitude: </b>${city[ville].lon} <br><b>Altitude: </b>${city[ville].alt} MAMSL`);
       }
       //   Fin   \\
       if (ville == tabGPS.length-1) {
         var f_marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: ficon}).addTo(macarte);
-        f_marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+        f_marker.bindPopup(`<b>Coordonnées:</b> ${ville} <br><b>Date: </b>${city[ville].date} <br><b>Lattitude: </b>${city[ville].lat} <br><b>Longitude: </b>${city[ville].lon} <br><b>Altitude: </b>${city[ville].alt} MAMSL`);
       }
       //   Centre   \\
       if (ville != 0 && ville != tabGPS.length-1) {
         if (true) {
           var marker_Min = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: incon_Min}).addTo(macarte);
-          marker_Min.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+          marker_Min.bindPopup(`<b>Coordonnées:</b> ${ville} <br><b>Date: </b>${city[ville].date} <br><b>Lattitude: </b>${city[ville].lat} <br><b>Longitude: </b>${city[ville].lon} <br><b>Altitude: </b>${city[ville].alt} MAMSL`);
         } else {
           var marker = new L.marker([city[ville].lat, city[ville].lon, city[ville].alt], {icon: incon}).addTo(macarte);
-          marker.bindPopup(`<b>Coordonnées: ${ville} <b><br>Lattitude: ${city[ville].lat} <br>Longitude: ${city[ville].lon} <br>Altitude: ${city[ville].alt} MAMSL`);
+          marker.bindPopup(`<b>Coordonnées:</b> ${ville} <br><b>Date: </b>${city[ville].date} <br><b>Lattitude: </b>${city[ville].lat} <br><b>Longitude: </b>${city[ville].lon} <br><b>Altitude: </b>${city[ville].alt} MAMSL`);
         }
       }
 
