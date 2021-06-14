@@ -10,9 +10,9 @@
         width: 100%;
     }
 </style>
-<div id="map">
-<!-- Ici s'affichera la carte -->
-</div>
+  <div id="map">
+  <!-- Ici s'affichera la carte -->
+  </div>
 <!-- Fichiers Javascript -->
 <%
   if (locals.user.animaux) {
@@ -48,3 +48,5 @@
 <script src="leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 <script type="text/javascript" src="js/fonctions.js"></script>
 <script type="text/javascript" src="js/API_WIMP.js"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>

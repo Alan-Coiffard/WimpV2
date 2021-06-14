@@ -44,7 +44,7 @@ function initMap() {
 
    var LeafIconHome = L.Icon.extend({
         options: {
-           iconSize:     [50, 64],
+           iconSize:     [20, 25],
            popupAnchor:  [-2, -3]
          }
     });
@@ -63,17 +63,16 @@ function initMap() {
        fillOpacity: 0.5,
        //Radius = Rayon "Maison"
        radius: distance
-    }).addTo(macarte);
+    }).addTo(macarte).bindPopup("Maison");
    } else {
      var distance = 0;
-     var d_marker = new L.marker([home_lat, home_lon], {icon: icon_home}).addTo(macarte);
+     var d_marker = new L.marker([home_lat, home_lon], {icon: icon_home}).addTo(macarte).bindPopup("Maison");
    };
 
   console.log('home.radius: ', home._mRadius);
   console.log('xxxxxxxxxxx: ', zoom);
 
   startZoom(home._mRadius, zoom);
-
 
   //Création du boutton "afficher Menu"
   //     /!\ PAS FINI /!\
@@ -175,11 +174,10 @@ function initMap() {
 
   }
    macarte.addLayer(markerClusters);
-   // Nous ajoutons la popup. A noter que son contenu (ici la variable ville) peut être du HTML
-   home.bindPopup("Maison");
 }
 window.onload = function(){
 // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
 
   initMap();
+  console.log();
 };
