@@ -184,22 +184,16 @@ const modifyProfil = (request, response) => {
         if (!foundUser || foundUser.email != user.email) {
           modifyUser(user, userId)
           .then(user => {
-            // response.status(201).json({ user })
             request.session.id_client = userId;
             request.session.nom = user.nom;
             request.session.prenom = user.prenom;
             request.session.email = user.email;
-
             response.redirect('/profil');
           })
           .catch((err) => console.error(err))
         } else {
           request.session.error = "Email already registered"
-          //request.session.message = "Connectez-vous"
-          // request.session.link = "/connexion"
           response.redirect('/profil')
-          // errors.push({ message: "Email already registered" });
-          // response.render("./profil", { errors, nom, prenom, email });
         }
         return foundUser
       })
@@ -365,16 +359,6 @@ const _findCollier = (id_client) => {
 
 }
 
-// const _findAnimal = (id_client) => {
-//   return database.raw(
-//     "SELECT colliers.id_collier, colliers.numero_collier, colliers.id_client, id_animal_collier, animaux.id_animal, nom_animal, naissance_animal, type_animal, distance, animaux.id_collier, id_utilisateur, AGE(naissance_animal) AS age_animal FROM animaux left join colliers on colliers.id_collier = animaux.id_collier WHERE id_utilisateur = ?"
-//   )
-//   .then((data) => {
-//     console.log("Data dans _findAnimal : ", data.rows);
-//     return data
-//   })
-// }
-
 const findType = (request, response) => {
 
   //console.log(request.session.id_client);
@@ -395,10 +379,8 @@ const findType = (request, response) => {
         return types
       })
       .then(() => {
-        //console.log("Colliers: ", colliers);
         request.session.types = types;
         response.render('home/home');
-        //response.status(200).json(user);
       })
       .catch((err) => console.error(err))
   }
@@ -407,7 +389,7 @@ const findType = (request, response) => {
 const _findType = (id_client)  => {
   //console.log(id_client);
   return database.raw("SELECT * FROM types")
-  
+
 }
 
 

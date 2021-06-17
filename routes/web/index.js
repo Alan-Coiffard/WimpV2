@@ -66,4 +66,6 @@ router.use("/flash", require("./home"));
 
 router.use("/test", require("./home"));
 
+router.use("*", require("./home"));
+
 module.exports = router;

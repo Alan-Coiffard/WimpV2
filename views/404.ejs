@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style media="screen">
+	@import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
+	:root {
+	  --bg: #313942;
+	  --ghost: #528cce;
+	  --heading:  #e7ebf2;
+	}
+
+
+body {
+background-color: #002256B3;
+font-family: 'Montserrat', sans-serif;
+}
+
+main {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	text-align: center;
+}
+
+h1 {
+	color: #e7ebf2;
+	font-size: 12.5rem;
+	letter-spacing: .10em;
+	margin: .025em 0;
+	text-shadow: .05em .05em 0 rgba(0,0,0,.25);
+	white-space: nowrap;
+}
+
+h1 span {
+	animation: spooky 2s alternate infinite linear;
+	color: #528cce;
+	display: inline-block;
+}
+
+@media (max-width: 30rem) {
+	h1 {
+		font-size: 8.5rem;
+	}
+}
+
+h2 {
+color: var(--heading);
+margin-bottom: .40em;
+}
+
+p {
+color: #ccc;
+margin-top: 0;
+}
+
+@keyframes spooky {
+	from {
+		transform: translatey(.15em) scaley(.95);
+	}
+
+	to {
+		transform: translatey(-.15em);
+	}
+}
+
+a {
+  all: unset;
+  color: black;
+  cursor: pointer;
+  font-family: 'Droid Serif', Helvetica, Arial, sans-serif;
+}
+:root {
+  --bleu: rgb(0,34,86);
+  --bleuleg: rgba(0,34,86, 0.7);
+  --marron:  rgb(163, 109, 0);
+  --marronleg: rgba(163, 109, 0, 0.7);
+  --gris:  rgb(112, 112, 112);
+  --grisleg: rgba(112, 112, 112, 0.7);
+  --vert:  rgb(44, 199, 26);
+  --vertleg: rgba(44, 199, 26, 0.42);
+  --rouge:  rgb(255, 0, 0);
+  --rougeleg: rgba(255, 0, 0, 0.7);
+  --orange:  rgb(108, 89, 71);
+  --orangeleg: rgba(108, 89, 71, 0.53);
+  --vertFonce: #6B9A49;
+	--color: #111;
+	--primary: #FFAB9D;
+}
+/* .btn {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.5s;
+  outline: none;
+}
+
+.btn-retour:hover {
+}
+
+.btn-retour {
+  position: relative;
+  padding: 10px;
+  width: 15vw;
+  text-align: center;
+  min-width: 100px;
+  background-color: var(--marronleg);
+} */
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,800);
+
+
+
+  section.container{
+    min-width: 500px;
+    /* margin: 10% auto; */
+    text-align: center;
+  }
+    /* a:hover{border-bottom: 1px solid #111;} */
+    /* h1{font-size: 2em; padding: 20px 0;} */
+    p{
+      font-size: .75em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 20px 0;
+    }
+
+    button:hover{cursor: pointer}
+    button {
+      background: transparent; outline: none;
+      position: relative;
+      border: 2px solid #111;
+      padding: 15px 50px;
+      overflow: hidden;
+    }
+
+    /*button:before (attr data-hover)*/
+    button:hover:before{opacity: 1; transform: translate(0,0);}
+    button:before{
+      content: attr(data-hover);
+      position: absolute;
+      top: 1.1em; left: 0;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
+      font-size: .8em;
+      opacity: 0;
+      transform: translate(-100%,0);
+      transition: all .3s ease-in-out;
+    }
+      /*button div (button text before hover)*/
+      button:hover div{opacity: 0; transform: translate(100%,0)}
+      button div{
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 800;
+        font-size: .8em;
+        transition: all .3s ease-in-out;
+      }
+
+
+	</style>
+	<script src="https://kit.fontawesome.com/0890217ce1.js" crossorigin="anonymous"></script>
+
+	<body>
+		<main>
+		  <h1>4<span><i class="fas fa-bone"></i></span>4</h1>
+		  <h2>Erreur 404: page introuvable</h2>
+		  <p>Désolé, la page que vous cherchez n'existe pas.</p>
+
+			<section class="container">
+			  <a href="/home"><button data-hover="click me!"><div>Retour</div></button></a>
+			</section>
+
+		</main>
+	</body>
+</html>

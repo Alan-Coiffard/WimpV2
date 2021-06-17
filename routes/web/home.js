@@ -50,9 +50,6 @@ router.get("/inscription", function(req, res){
 
 router.get("/deconnexion", function(req, res){
   let errors = []
-  if (!req.session.id_client) {
-    errors.push({ message: "Connectez-vous" });
-  }
   if (errors.length > 0) {
     res.render("home/connexion", { errors });
   } else {
@@ -65,11 +62,11 @@ router.get("/deconnexion", function(req, res){
 router.get('/find', User.findAll);
 router.get('/findHome', User.findHome);
 
+
 router.get("/profil", function(req, res){
   console.log("profil page charged");
   res.render("profil");
 });
-
 //router.post fait la même chose que .get() mais pour les appel de post sur la page web indiqué.
 router.post('/inscription', User.signup);
 router.post('/connexion', User.signin);
@@ -91,6 +88,16 @@ router.post('/modifierAnimal', User.modifierAnimal);
 
 router.post('/ajoutCollier', User.ajoutCollier);
 router.get('/supprimerCollier', User.supprimerCollier);
+
+
+router.get('/easter/egg', function(req, res){
+  res.render("404_easterEgg");
+});
+
+//The 404 Route (ALWAYS Keep this as the last route)
+router.get('*', function(req, res){
+  res.render("404");
+});
 
 //module.export comme son nom l'indique exporte les donné ce qui les rend accessible sur d'autre page
 module.exports = router;
